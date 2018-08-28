@@ -24,7 +24,7 @@ textarea {
 }
 
 .navbar-theme {
-    background: #2dbb9b;
+    background-color:black;
     font-weight: bold;
 }
 
@@ -47,14 +47,14 @@ textarea {
     float: right;
     padding: 20px;
     background: none;
-    border: 1px solid #2dbb9b;
-    color: #2dbb9b;
+    border: 1px solid black;
+    color: #808080;
     letter-spacing: normal;
     position: relative;
 }
 
     .basket:hover {
-        background: #2dbb9b
+        background: lightgray;
     }
 
     .basket span {
@@ -69,7 +69,7 @@ textarea {
         margin-top: 20px;
         right: -1px;
         display: none;
-        border: 1px solid #2dbb9b;
+        border: 1px solid black;
         background: #fff;
         color: #808080;
         z-index: 3;
@@ -98,7 +98,7 @@ textarea {
         .basket table tr:last-child a {
             padding: 10px 20px;
             float: right;
-            color: #2dbb9b;
+            color: lightgray;
             opacity: .7;
             transition: .3s;
             font-weight: bold;
@@ -108,7 +108,7 @@ textarea {
 
             .basket table tr:last-child a:hover {
                 opacity: 1;
-                background: #2dbb9b;
+                background: lightgray;
                 color: #fff
             }
 
