@@ -163,6 +163,26 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Categories\laski_category.jpg" />
+    <Content Include="Images\Categories\lozko_category.jpg" />
+    <Content Include="Images\Categories\podnosniki_category.jpg" />
+    <Content Include="Images\Categories\wozki_category.jpg" />
+    <Content Include="Images\header.jpg" />
+    <Content Include="Images\Products\laska1.jpg" />
+    <Content Include="Images\Products\laska2.jpg" />
+    <Content Include="Images\Products\laska3.jpg" />
+    <Content Include="Images\Products\lozko1.jpg" />
+    <Content Include="Images\Products\lozko2.jpg" />
+    <Content Include="Images\Products\lozko3.jpg" />
+    <Content Include="Images\Products\podnosnik.jpg" />
+    <Content Include="Images\Products\podnosnik1.jpg" />
+    <Content Include="Images\Products\podnosnik2.jpg" />
+    <Content Include="Images\Products\podnosnik3.jpg" />
+    <Content Include="Images\Products\wozek.jpg" />
+    <Content Include="Images\Products\wozek1.jpg" />
+    <Content Include="Images\Products\wozek2.jpg" />
+    <Content Include="Images\Products\wozek3.jpg" />
+    <Content Include="Images\Products\wozek4.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -193,6 +213,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
