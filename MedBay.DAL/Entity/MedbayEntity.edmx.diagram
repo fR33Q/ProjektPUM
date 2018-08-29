@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="42b56701dc224e16a9c79d382f7286ca" Name="Diagram1">
+        <EntityTypeShape EntityType="MedbayModel.Adress" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedbayModel.Cart" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedbayModel.Category" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedbayModel.Customer" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedbayModel.Order" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedbayModel.PaymentMethod" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedbayModel.Price" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedbayModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedbayModel.TransportMethod" Width="1.5" PointX="3" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedbayModel.database_firewall_rules" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="MedbayModel.FK_CUSTOMER_ADDRESS" ManuallyRouted="false" />
+        <AssociationConnector Association="MedbayModel.FK_Cart_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="MedbayModel.FK_CART_PRODUCT" ManuallyRouted="false" />
+        <AssociationConnector Association="MedbayModel.FK_PRODUCT_CATEGORY" ManuallyRouted="false" />
+        <AssociationConnector Association="MedbayModel.FK_ORDER_CUSTOMER" ManuallyRouted="false" />
+        <AssociationConnector Association="MedbayModel.FK_ORDER_PAYMENT_METHOD" ManuallyRouted="false" />
+        <AssociationConnector Association="MedbayModel.FK_ORDER_TRANSPORT_METHOD" ManuallyRouted="false" />
+        <AssociationConnector Association="MedbayModel.FK_Product_Price" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
