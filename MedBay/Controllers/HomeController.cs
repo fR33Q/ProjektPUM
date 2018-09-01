@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
 
 namespace MedBay.Controllers
 {
@@ -14,10 +17,12 @@ namespace MedBay.Controllers
     {
         private IProductRepository productRepository;
         private ICartRepository cartRepository;
-        public HomeController(IProductRepository productRepository, ICartRepository cartRepository)
+        private ICustomerRepository customerRepository;
+        public HomeController(IProductRepository productRepository, ICartRepository cartRepository, ICustomerRepository customerRepository)
         {
             this.productRepository = productRepository;
             this.cartRepository = cartRepository;
+            this.customerRepository = customerRepository;
         }
 
         public ActionResult Index()
@@ -28,7 +33,49 @@ namespace MedBay.Controllers
             {
                 Products = products,
             };
-           
+
+       
+            //register z ręki dla sprawdzenia
+
+            //var userStore = new UserStore<IdentityUser>();
+            //userStore.Context.Database.Connection.ConnectionString =
+            //    System.Configuration.ConfigurationManager.ConnectionStrings["MedbayEntitiesAccount"].ConnectionString;
+            //var manager = new UserManager<IdentityUser>(userStore);
+            //var user = new IdentityUser { UserName = "Test" };
+
+    
+            //IdentityResult result =  manager.Create(user, "1234567");
+
+            //if (result.Succeeded)
+            //{
+
+            //    Customer customer = new Customer
+            //    {
+
+
+            //        FirstName = "Test",
+            //        LastName = "Test",
+            //        PhoneNumber = "",
+            //        Email = "",
+            //        UserID = user.Id,
+            //        Adress = new Adress
+            //        {
+            //            Street = "",
+            //            Number = "",
+            //            City = "",
+            //            PostalCode = ""
+            //        }
+
+
+            //    };
+
+
+            //    customerRepository.InsertCustomer(customer);
+            //}
+
+
+
+
             return View(model);
            
         }

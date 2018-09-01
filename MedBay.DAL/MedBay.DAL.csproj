@@ -36,6 +36,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -53,6 +59,18 @@
     <Compile Include="Entity\Adress.cs">
       <DependentUpon>MedbayEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AspNetRoles.cs">
+      <DependentUpon>MedbayEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AspNetUserClaims.cs">
+      <DependentUpon>MedbayEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AspNetUserLogins.cs">
+      <DependentUpon>MedbayEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AspNetUsers.cs">
+      <DependentUpon>MedbayEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Cart.cs">
       <DependentUpon>MedbayEntity.tt</DependentUpon>
     </Compile>
@@ -63,6 +81,9 @@
       <DependentUpon>MedbayEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\database_firewall_rules.cs">
+      <DependentUpon>MedbayEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\database_firewall_rules1.cs">
       <DependentUpon>MedbayEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\MedbayEntity.Context.cs">
@@ -98,6 +119,7 @@
     <Compile Include="IRepositories\ICartRepostiory.cs" />
     <Compile Include="IRepositories\ICustomerRepository.cs" />
     <Compile Include="IRepositories\IProductRepository.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CartRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />

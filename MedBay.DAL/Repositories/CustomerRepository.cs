@@ -10,7 +10,7 @@ namespace MedBay.DAL.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        public Customer GetUserInformation(int userID)
+        public Customer GetUserInformation(string userID)
         {
             MedbayEntities db = new MedbayEntities();
             var info = (from x in db.Customer

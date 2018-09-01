@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MedbayModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MedbayModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adress">
           <Key>
             <PropertyRef Name="Id" />
@@ -14,6 +14,57 @@
           <Property Name="Number" Type="nvarchar" MaxLength="50" />
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="Cart">
           <Key>
@@ -42,8 +93,24 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="AdressID" Type="int" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -74,7 +141,7 @@
             <PropertyRef Name="PriceId" />
           </Key>
           <Property Name="PriceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Price1" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -97,7 +164,7 @@
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="database_firewall_rules">
+        <EntityType Name="database_firewall_rules1">
           <Key>
             <PropertyRef Name="id" />
             <PropertyRef Name="name" />
@@ -146,6 +213,62 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
             </Principal>
             <Dependent Role="Customer">
               <PropertyRef Name="AdressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -211,23 +334,29 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
         </Association>
         <EntityContainer Name="MedbayModelStoreContainer">
           <EntitySet Name="Adress" EntityType="Self.Adress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Price" EntityType="Self.Price" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransportMethod" EntityType="Self.TransportMethod" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+          <EntitySet Name="database_firewall_rules1" EntityType="Self.database_firewall_rules1" store:Type="Views" store:Schema="sys" store:Name="database_firewall_rules">
             <DefiningQuery>SELECT 
-    [database_firewall_rules].[id] AS [id], 
-    [database_firewall_rules].[name] AS [name], 
-    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
-    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
-    [database_firewall_rules].[create_date] AS [create_date], 
-    [database_firewall_rules].[modify_date] AS [modify_date]
-    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+    [database_firewall_rules1].[id] AS [id], 
+    [database_firewall_rules1].[name] AS [name], 
+    [database_firewall_rules1].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules1].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules1].[create_date] AS [create_date], 
+    [database_firewall_rules1].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules1]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Cart_Customer" Association="Self.FK_Cart_Customer">
             <End Role="Customer" EntitySet="Customer" />
@@ -241,6 +370,22 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
             <End Role="Adress" EntitySet="Adress" />
             <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
           <AssociationSet Name="FK_ORDER_CUSTOMER" Association="Self.FK_ORDER_CUSTOMER">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Order" EntitySet="Order" />
@@ -262,21 +407,81 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MedbayModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MedbayEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adress" EntityType="MedbayModel.Adress" />
+          <EntitySet Name="Cart" EntityType="MedbayModel.Cart" />
+          <EntitySet Name="Category" EntityType="MedbayModel.Category" />
+          <EntitySet Name="Customer" EntityType="MedbayModel.Customer" />
+          <EntitySet Name="database_firewall_rules" EntityType="MedbayModel.database_firewall_rules" />
+          <EntitySet Name="Order" EntityType="MedbayModel.Order" />
+          <EntitySet Name="PaymentMethod" EntityType="MedbayModel.PaymentMethod" />
+          <EntitySet Name="Price" EntityType="MedbayModel.Price" />
+          <EntitySet Name="Product" EntityType="MedbayModel.Product" />
+          <EntitySet Name="TransportMethod" EntityType="MedbayModel.TransportMethod" />
+          <EntitySet Name="database_firewall_rules1" EntityType="MedbayModel.database_firewall_rules1" />
+          <AssociationSet Name="FK_CUSTOMER_ADDRESS" Association="MedbayModel.FK_CUSTOMER_ADDRESS">
+            <End Role="Adress" EntitySet="Adress" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cart_Customer" Association="MedbayModel.FK_Cart_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CART_PRODUCT" Association="MedbayModel.FK_CART_PRODUCT">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_CATEGORY" Association="MedbayModel.FK_PRODUCT_CATEGORY">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_CUSTOMER" Association="MedbayModel.FK_ORDER_CUSTOMER">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_PAYMENT_METHOD" Association="MedbayModel.FK_ORDER_PAYMENT_METHOD">
+            <End Role="PaymentMethod" EntitySet="PaymentMethod" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_TRANSPORT_METHOD" Association="MedbayModel.FK_ORDER_TRANSPORT_METHOD">
+            <End Role="TransportMethod" EntitySet="TransportMethod" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Price" Association="MedbayModel.FK_Product_Price">
+            <End Role="Price" EntitySet="Price" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <EntitySet Name="AspNetRoles" EntityType="MedbayModel.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="MedbayModel.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="MedbayModel.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="MedbayModel.AspNetUsers" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="MedbayModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="MedbayModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="MedbayModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Adress">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_CUSTOMER_ADDRESS" FromRole="Adress" ToRole="Customer" />
+          <NavigationProperty Name="Customer" Relationship="MedbayModel.FK_CUSTOMER_ADDRESS" FromRole="Adress" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Cart">
           <Key>
@@ -287,17 +492,17 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
           <Property Name="Cart_Price" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Cart_Customer" FromRole="Cart" ToRole="Customer" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_CART_PRODUCT" FromRole="Cart" ToRole="Product" />
+          <NavigationProperty Name="Customer" Relationship="MedbayModel.FK_Cart_Customer" FromRole="Cart" ToRole="Customer" />
+          <NavigationProperty Name="Product" Relationship="MedbayModel.FK_CART_PRODUCT" FromRole="Cart" ToRole="Product" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PictureFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="Category" ToRole="Product" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PictureFileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="MedbayModel.FK_PRODUCT_CATEGORY" FromRole="Category" ToRole="Product" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -308,70 +513,11 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AdressID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Adress" Relationship="Self.FK_CUSTOMER_ADDRESS" FromRole="Customer" ToRole="Adress" />
-          <NavigationProperty Name="Cart" Relationship="Self.FK_Cart_Customer" FromRole="Customer" ToRole="Cart" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_ORDER_CUSTOMER" FromRole="Customer" ToRole="Order" />
-        </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerID" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PhontNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShipCity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShipStreet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShipNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShipPostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PaymentMethodID" Type="Int32" Nullable="false" />
-          <Property Name="TransportMethodID" Type="Int32" Nullable="false" />
-          <Property Name="Order_Price" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_ORDER_CUSTOMER" FromRole="Order" ToRole="Customer" />
-          <NavigationProperty Name="PaymentMethod" Relationship="Self.FK_ORDER_PAYMENT_METHOD" FromRole="Order" ToRole="PaymentMethod" />
-          <NavigationProperty Name="TransportMethod" Relationship="Self.FK_ORDER_TRANSPORT_METHOD" FromRole="Order" ToRole="TransportMethod" />
-        </EntityType>
-        <EntityType Name="PaymentMethod">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_ORDER_PAYMENT_METHOD" FromRole="PaymentMethod" ToRole="Order" />
-        </EntityType>
-        <EntityType Name="Price">
-          <Key>
-            <PropertyRef Name="PriceId" />
-          </Key>
-          <Property Name="PriceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Price1" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_Product_Price" FromRole="Price" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ProductId" />
-          </Key>
-          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Product_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Product_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PictureFileName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CategoryID" Type="Int32" Nullable="false" />
-          <Property Name="PriceID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cart" Relationship="Self.FK_CART_PRODUCT" FromRole="Product" ToRole="Cart" />
-          <NavigationProperty Name="Category" Relationship="Self.FK_PRODUCT_CATEGORY" FromRole="Product" ToRole="Category" />
-          <NavigationProperty Name="Price" Relationship="Self.FK_Product_Price" FromRole="Product" ToRole="Price" />
-        </EntityType>
-        <EntityType Name="TransportMethod">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Price" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_ORDER_TRANSPORT_METHOD" FromRole="TransportMethod" ToRole="Order" />
+          <NavigationProperty Name="Adress" Relationship="MedbayModel.FK_CUSTOMER_ADDRESS" FromRole="Customer" ToRole="Adress" />
+          <NavigationProperty Name="Cart" Relationship="MedbayModel.FK_Cart_Customer" FromRole="Customer" ToRole="Cart" />
+          <NavigationProperty Name="Order" Relationship="MedbayModel.FK_ORDER_CUSTOMER" FromRole="Customer" ToRole="Order" />
         </EntityType>
         <EntityType Name="database_firewall_rules">
           <Key>
@@ -383,15 +529,90 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
             <PropertyRef Name="modify_date" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="start_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="end_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhontNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShipCity" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShipStreet" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShipNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShipPostalCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentMethodID" Type="Int32" Nullable="false" />
+          <Property Name="TransportMethodID" Type="Int32" Nullable="false" />
+          <Property Name="Order_Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="MedbayModel.FK_ORDER_CUSTOMER" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="PaymentMethod" Relationship="MedbayModel.FK_ORDER_PAYMENT_METHOD" FromRole="Order" ToRole="PaymentMethod" />
+          <NavigationProperty Name="TransportMethod" Relationship="MedbayModel.FK_ORDER_TRANSPORT_METHOD" FromRole="Order" ToRole="TransportMethod" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="MedbayModel.FK_ORDER_PAYMENT_METHOD" FromRole="PaymentMethod" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Price">
+          <Key>
+            <PropertyRef Name="PriceId" />
+          </Key>
+          <Property Name="PriceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="MedbayModel.FK_Product_Price" FromRole="Price" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Product_Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PictureFileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="PriceID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cart" Relationship="MedbayModel.FK_CART_PRODUCT" FromRole="Product" ToRole="Cart" />
+          <NavigationProperty Name="Category" Relationship="MedbayModel.FK_PRODUCT_CATEGORY" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Price" Relationship="MedbayModel.FK_Product_Price" FromRole="Product" ToRole="Price" />
+        </EntityType>
+        <EntityType Name="TransportMethod">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="MedbayModel.FK_ORDER_TRANSPORT_METHOD" FromRole="TransportMethod" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="database_firewall_rules1">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="start_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="end_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_CUSTOMER_ADDRESS">
-          <End Role="Adress" Type="Self.Adress" Multiplicity="1" />
-          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <End Type="MedbayModel.Adress" Role="Adress" Multiplicity="1" />
+          <End Type="MedbayModel.Customer" Role="Customer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Adress">
               <PropertyRef Name="Id" />
@@ -402,8 +623,8 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Cart_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <End Type="MedbayModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="MedbayModel.Cart" Role="Cart" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="Id" />
@@ -414,8 +635,8 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CART_PRODUCT">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <End Type="MedbayModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="MedbayModel.Cart" Role="Cart" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ProductId" />
@@ -426,8 +647,8 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PRODUCT_CATEGORY">
-          <End Role="Category" Type="Self.Category" Multiplicity="1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <End Type="MedbayModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="MedbayModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Category">
               <PropertyRef Name="Id" />
@@ -438,8 +659,8 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ORDER_CUSTOMER">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <End Type="MedbayModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="MedbayModel.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="Id" />
@@ -450,8 +671,8 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ORDER_PAYMENT_METHOD">
-          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <End Type="MedbayModel.PaymentMethod" Role="PaymentMethod" Multiplicity="1" />
+          <End Type="MedbayModel.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PaymentMethod">
               <PropertyRef Name="Id" />
@@ -462,8 +683,8 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ORDER_TRANSPORT_METHOD">
-          <End Role="TransportMethod" Type="Self.TransportMethod" Multiplicity="1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <End Type="MedbayModel.TransportMethod" Role="TransportMethod" Multiplicity="1" />
+          <End Type="MedbayModel.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TransportMethod">
               <PropertyRef Name="Id" />
@@ -474,8 +695,8 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Product_Price">
-          <End Role="Price" Type="Self.Price" Multiplicity="1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <End Type="MedbayModel.Price" Role="Price" Multiplicity="1" />
+          <End Type="MedbayModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Price">
               <PropertyRef Name="PriceId" />
@@ -485,50 +706,87 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MedbayEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Adress" EntityType="Self.Adress" />
-          <EntitySet Name="Cart" EntityType="Self.Cart" />
-          <EntitySet Name="Category" EntityType="Self.Category" />
-          <EntitySet Name="Customer" EntityType="Self.Customer" />
-          <EntitySet Name="Order" EntityType="Self.Order" />
-          <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" />
-          <EntitySet Name="Price" EntityType="Self.Price" />
-          <EntitySet Name="Product" EntityType="Self.Product" />
-          <EntitySet Name="TransportMethod" EntityType="Self.TransportMethod" />
-          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
-          <AssociationSet Name="FK_CUSTOMER_ADDRESS" Association="Self.FK_CUSTOMER_ADDRESS">
-            <End Role="Adress" EntitySet="Adress" />
-            <End Role="Customer" EntitySet="Customer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cart_Customer" Association="Self.FK_Cart_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CART_PRODUCT" Association="Self.FK_CART_PRODUCT">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PRODUCT_CATEGORY" Association="Self.FK_PRODUCT_CATEGORY">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ORDER_CUSTOMER" Association="Self.FK_ORDER_CUSTOMER">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ORDER_PAYMENT_METHOD" Association="Self.FK_ORDER_PAYMENT_METHOD">
-            <End Role="PaymentMethod" EntitySet="PaymentMethod" />
-            <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ORDER_TRANSPORT_METHOD" Association="Self.FK_ORDER_TRANSPORT_METHOD">
-            <End Role="TransportMethod" EntitySet="TransportMethod" />
-            <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_Price" Association="Self.FK_Product_Price">
-            <End Role="Price" EntitySet="Price" />
-            <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
-        </EntityContainer>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="MedbayModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="MedbayModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="MedbayModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="MedbayModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="MedbayModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="MedbayModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="MedbayModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MedbayModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="MedbayModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MedbayModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="MedbayModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="MedbayModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -538,114 +796,179 @@ warning 6002: The table/view 'Medbay.sys.database_firewall_rules' does not have 
           <EntitySetMapping Name="Adress">
             <EntityTypeMapping TypeName="MedbayModel.Adress">
               <MappingFragment StoreEntitySet="Adress">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Cart">
             <EntityTypeMapping TypeName="MedbayModel.Cart">
               <MappingFragment StoreEntitySet="Cart">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Cart_Price" ColumnName="Cart_Price" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Cart_Price" ColumnName="Cart_Price" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="MedbayModel.Category">
               <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="PictureFileName" ColumnName="PictureFileName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customer">
             <EntityTypeMapping TypeName="MedbayModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="AdressID" ColumnName="AdressID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Order">
-            <EntityTypeMapping TypeName="MedbayModel.Order">
-              <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AdressID" ColumnName="AdressID" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="PhontNumber" ColumnName="PhontNumber" />
-                <ScalarProperty Name="ShipCity" ColumnName="ShipCity" />
-                <ScalarProperty Name="ShipStreet" ColumnName="ShipStreet" />
-                <ScalarProperty Name="ShipNumber" ColumnName="ShipNumber" />
-                <ScalarProperty Name="ShipPostalCode" ColumnName="ShipPostalCode" />
-                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
-                <ScalarProperty Name="TransportMethodID" ColumnName="TransportMethodID" />
-                <ScalarProperty Name="Order_Price" ColumnName="Order_Price" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PaymentMethod">
-            <EntityTypeMapping TypeName="MedbayModel.PaymentMethod">
-              <MappingFragment StoreEntitySet="PaymentMethod">
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Price">
-            <EntityTypeMapping TypeName="MedbayModel.Price">
-              <MappingFragment StoreEntitySet="Price">
-                <ScalarProperty Name="PriceId" ColumnName="PriceId" />
-                <ScalarProperty Name="Price1" ColumnName="Price" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Product">
-            <EntityTypeMapping TypeName="MedbayModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
-                <ScalarProperty Name="Product_Description" ColumnName="Product_Description" />
-                <ScalarProperty Name="PictureFileName" ColumnName="PictureFileName" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="PriceID" ColumnName="PriceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TransportMethod">
-            <EntityTypeMapping TypeName="MedbayModel.TransportMethod">
-              <MappingFragment StoreEntitySet="TransportMethod">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="database_firewall_rules">
             <EntityTypeMapping TypeName="MedbayModel.database_firewall_rules">
               <MappingFragment StoreEntitySet="database_firewall_rules">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
-                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
                 <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="MedbayModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Order_Price" ColumnName="Order_Price" />
+                <ScalarProperty Name="TransportMethodID" ColumnName="TransportMethodID" />
+                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+                <ScalarProperty Name="ShipPostalCode" ColumnName="ShipPostalCode" />
+                <ScalarProperty Name="ShipNumber" ColumnName="ShipNumber" />
+                <ScalarProperty Name="ShipStreet" ColumnName="ShipStreet" />
+                <ScalarProperty Name="ShipCity" ColumnName="ShipCity" />
+                <ScalarProperty Name="PhontNumber" ColumnName="PhontNumber" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentMethod">
+            <EntityTypeMapping TypeName="MedbayModel.PaymentMethod">
+              <MappingFragment StoreEntitySet="PaymentMethod">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Price">
+            <EntityTypeMapping TypeName="MedbayModel.Price">
+              <MappingFragment StoreEntitySet="Price">
+                <ScalarProperty Name="Price1" ColumnName="Price1" />
+                <ScalarProperty Name="PriceId" ColumnName="PriceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="MedbayModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="PriceID" ColumnName="PriceID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="PictureFileName" ColumnName="PictureFileName" />
+                <ScalarProperty Name="Product_Description" ColumnName="Product_Description" />
+                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransportMethod">
+            <EntityTypeMapping TypeName="MedbayModel.TransportMethod">
+              <MappingFragment StoreEntitySet="TransportMethod">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="database_firewall_rules1">
+            <EntityTypeMapping TypeName="MedbayModel.database_firewall_rules1">
+              <MappingFragment StoreEntitySet="database_firewall_rules1">
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="MedbayModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="MedbayModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="MedbayModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="MedbayModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="MedbayModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

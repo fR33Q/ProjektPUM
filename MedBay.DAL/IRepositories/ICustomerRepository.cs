@@ -9,7 +9,7 @@ namespace MedBay.DAL.IRepositories
 {
     public interface ICustomerRepository
     {
-        Customer GetUserInformation(int userID);
+        Customer GetUserInformation(string userID);
 
         void InsertCustomer(Customer customer);
        

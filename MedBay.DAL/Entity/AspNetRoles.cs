@@ -12,27 +12,18 @@ namespace MedBay.DAL.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class Customer
+    public partial class AspNetRoles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Customer()
+        public AspNetRoles()
         {
-            this.Cart = new HashSet<Cart>();
-            this.Order = new HashSet<Order>();
+            this.AspNetUsers = new HashSet<AspNetUsers>();
         }
     
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
-        public int AdressID { get; set; }
-        public string UserID { get; set; }
-        public string Email { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     
-        public virtual Adress Adress { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Cart { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
     }
 }
