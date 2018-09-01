@@ -11,7 +11,7 @@ namespace MedBay.DAL.Repositories
 {
     public class CartRepository : ICartRepository
     {
-        public bool InsertCart(Cart cart)
+        public string InsertCart(Cart cart)
         {
             try
             {
@@ -20,11 +20,11 @@ namespace MedBay.DAL.Repositories
                 
                 db.SaveChanges();
 
-                return true;
+                return "Order was succesfully inserted";
             }
             catch (Exception e)
             {
-                return false;
+                return "Error:" + e;
             }
         }
 

@@ -9,6 +9,5 @@ namespace MedBay.Models
     public class HomePageViewModel
     {
         public List<Product> Products { get; set; }
-        public Cart Cart { get; set; }
     }
 }

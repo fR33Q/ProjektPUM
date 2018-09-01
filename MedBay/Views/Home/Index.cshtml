@@ -25,10 +25,10 @@
                     <span class="p-name">@item.Product_Name</span>
                     <span class="p-description">@item.Product_Description</span>
                     <span> <img src="~/Images/Products/@item.PictureFileName" style="width: 200px;" /></span>
-                    <div class="add-to-cart">
-                        @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.ProductId}, null)
-                        <span class="p-price">@String.Format("{0:c}", 1)</span>
-                    </div>
+                    @*<div class="add-to-cart">
+                        @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.PID }, null)
+                        <span class="p-price">@String.Format("{0:c}", item.UnitPrice)</span>
+                    </div>*@
                     @*<span class="p-unit">
                         @item.UnitsInStock
                         @if (item.UnitsInStock > 1)

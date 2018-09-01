@@ -9,7 +9,7 @@ namespace MedBay.DAL.IRepositories
 {
     public interface ICartRepository
     {
-        bool InsertCart(Cart cart);
+        string InsertCart(Cart cart);
         string DeleteCart(int id);
         string UpdateCart(int id, Cart cart);
         void UpdateQuantity(int id, int quantity);
