@@ -1,4 +1,8 @@
-﻿using System;
+﻿using MedBay.DAL.Entity;
+using MedBay.DAL.IRepositories;
+using MedBay.DAL.Repositories;
+using MedBay.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,23 +12,23 @@ namespace MedBay.Controllers
 {
     public class HomeController : Controller
     {
+        private IProductRepository productRepository;
+        public HomeController(IProductRepository productRepository)
+        {
+            this.productRepository = productRepository;
+        }
+
         public ActionResult Index()
         {
-            return View();
+            List<Product> products = productRepository.GetAllProducts();
+            HomePageViewModel model = new HomePageViewModel
+            {
+                Products = products,
+            };
+           
+            return View(model);
+           
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

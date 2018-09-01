@@ -1,53 +1,58 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+
+@model MedBay.Models.HomePageViewModel
 <h2>Products</h2>
-<form @*action="/Home/Category*@" method="get" id="category" class="option">
+<form @*action="/Home/Category*@ " method="get" id="category" class="option">
     <span>Category</span>
     <select id="catName" class="form-control" name="catName" onchange="$('#category').submit()">
-        <option>-- Select --</option>
-        <option value="">All</option>
-        <option value="Washing Machines">Washing Machines</option>
-        <option value="Kettles">Kettles</option>
-        <option value="Microwaves">Microwaves</option>
+        <option>-- Wybierz --</option>
+        <option value="">Wszystkie</option>
+        <option value="Washing Machines">Wózki inwalidzkie</option>
+        <option value="Kettles">Łóżka</option>
+        <option value="Microwaves">Podnośniki</option>
+        <option value="Microwaves">Laski</option>
     </select>
 </form>
-@*@if (ViewBag.Products.Count == 0)
-{*@
-    <br />
+@if (Model.Products != null)
+{
+    <div class="list-view">
+        @foreach (var item in Model.Products)
+            {
+                <div class="list-item">
+                    @*<span class="p-cart">@item.Category</span>*@
+                    @*<span class="p-brand">@item.Price</span>*@
+                    <span class="p-name">@item.Product_Name</span>
+                    <span class="p-description">@item.Product_Description</span>
+                    <span> <img src="~/Images/Products/@item.PictureFileName" style="width: 200px;" /></span>
+                    @*<div class="add-to-cart">
+                        @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.PID }, null)
+                        <span class="p-price">@String.Format("{0:c}", item.UnitPrice)</span>
+                    </div>*@
+                    @*<span class="p-unit">
+                        @item.UnitsInStock
+                        @if (item.UnitsInStock > 1)
+                        {
+                            <text>units</text>
+                        }
+                        else
+                        {
+                            <text>unit</text>
+                        }
+                    </span>*@
+                </div>
+            }
+    </div>
+
+
+}
+else
+{
     <div id="EmptyDataMsg" class="alert alert-info">
         <strong>Welcome!</strong> Our shop is currently empty.
     </div>
-@*}
-else
-{*@
-    <div class="list-view">
-        @*@foreach (var item in ViewBag.Products)
-        {
-            <div class="list-item">
-                <span class="p-cart">@item.Category</span>
-                <span class="p-brand">@item.Brand</span>
-                <span class="p-name">@item.PName</span>
-                <span class="p-description">@item.Description</span>
-                <div class="add-to-cart">
-                    @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.PID }, null)
-                    <span class="p-price">@String.Format("{0:c}", item.UnitPrice)</span>
-                </div>
-                <span class="p-unit">
-                    @item.UnitsInStock
-                    @if (item.UnitsInStock > 1)
-                    {
-                        <text>units</text>
-                    }
-                    else
-                    {
-                        <text>unit</text>
-                    }
-                </span>
-            </div>
-        }*@
-    </div>
-@*}*@
+}
 
 @*<tr>
         <td>@item.pname</td>

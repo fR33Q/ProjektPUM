@@ -1,4 +1,5 @@
 ﻿using MedBay.DAL.Entity;
+using MedBay.DAL.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MedBay.DAL.Repositories
 {
-    public class ProductRepository
+    public class ProductRepository : IProductRepository
     {
         public string InsertProduct(Product product)
         {
@@ -97,7 +98,7 @@ namespace MedBay.DAL.Repositories
                     return products;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }
