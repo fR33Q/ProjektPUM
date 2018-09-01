@@ -13,14 +13,17 @@ namespace MedBay.Controllers
     public class HomeController : Controller
     {
         private IProductRepository productRepository;
-        public HomeController(IProductRepository productRepository)
+        private ICartRepository cartRepository;
+        public HomeController(IProductRepository productRepository, ICartRepository cartRepository)
         {
             this.productRepository = productRepository;
+            this.cartRepository = cartRepository;
         }
 
         public ActionResult Index()
         {
             List<Product> products = productRepository.GetAllProducts();
+           // Cart cart = cartRepository.GetOrdersInCart(clientId);
             HomePageViewModel model = new HomePageViewModel
             {
                 Products = products,
@@ -49,6 +52,16 @@ namespace MedBay.Controllers
             };
 
             return View("Index",model);
+        }
+        public ActionResult AddToCart(int id)
+        {
+            var product = productRepository.GetProduct(id);
+            Cart cart = new Cart
+            {
+                Product = product,
+            };
+            cartRepository.InsertCart(cart);
+            return RedirectToAction("Index");
         }
 
     }
