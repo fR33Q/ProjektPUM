@@ -30,5 +30,26 @@ namespace MedBay.Controllers
            
         }
 
+        public ActionResult Category(string catName)
+        {
+            List<Product> products;
+            var categoryId = productRepository.GetCategoryId(catName);
+            if (catName == "")
+            {
+               products = productRepository.GetAllProducts();
+            }
+            else
+            {
+               products = productRepository.GetProductsByCategory(categoryId);
+            }
+           
+            HomePageViewModel model = new HomePageViewModel
+            {
+                Products = products,
+            };
+
+            return View("Index",model);
+        }
+
     }
 }

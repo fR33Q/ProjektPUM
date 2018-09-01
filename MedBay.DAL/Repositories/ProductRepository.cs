@@ -121,5 +121,17 @@ namespace MedBay.DAL.Repositories
                 return null;
             }
         }
+
+        public int GetCategoryId(string categoryName)
+        {
+                using (MedbayEntities context = new MedbayEntities())
+                {
+                    int categoryId = (from x in context.Category
+                                      where x.Name == categoryName
+                                      select x.Id).SingleOrDefault();
+                    return categoryId;
+                }
+            
+        }
     }
 }

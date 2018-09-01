@@ -4,15 +4,14 @@
 
 @model MedBay.Models.HomePageViewModel
 <h2>Products</h2>
-<form @*action="/Home/Category*@ " method="get" id="category" class="option">
+<form action="/Home/Category" method="get" id="category" class="option">
     <span>Category</span>
     <select id="catName" class="form-control" name="catName" onchange="$('#category').submit()">
-        <option>-- Wybierz --</option>
         <option value="">Wszystkie</option>
-        <option value="Washing Machines">Wózki inwalidzkie</option>
-        <option value="Kettles">Łóżka</option>
-        <option value="Microwaves">Podnośniki</option>
-        <option value="Microwaves">Laski</option>
+        <option value="Wózki inwalidzkie">Wózki inwalidzkie</option>
+        <option value="Lózka">Łóżka</option>
+        <option value="Podnosniki">Podnośniki</option>
+        <option value="Laski">Laski</option>
     </select>
 </form>
 @if (Model.Products != null)
