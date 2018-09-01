@@ -45,6 +45,8 @@ namespace MedBay
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<ICustomerRepository, CustomerRepository>();
+            container.RegisterType<ICartRepository, CartRepository>();
 
         }
     }

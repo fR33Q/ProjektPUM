@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using MedBay.DAL.Entity;
 using System.Data.Entity;
+using MedBay.DAL.IRepositories;
 
 namespace MedBay.DAL.Repositories
 {
-    public class CartRepository
+    public class CartRepository : ICartRepository
     {
         public string InsertCart(Cart cart)
         {
