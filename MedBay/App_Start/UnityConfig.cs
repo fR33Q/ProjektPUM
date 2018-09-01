@@ -1,8 +1,14 @@
+using MedBay.App_Start;
+using MedBay.Controllers;
 using MedBay.DAL.IRepositories;
 using MedBay.DAL.Repositories;
+using MedBay.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-
+using System.Data.Entity;
 using Unity;
+using Unity.Injection;
 
 namespace MedBay
 {
@@ -47,6 +53,11 @@ namespace MedBay
             container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<ICustomerRepository, CustomerRepository>();
             container.RegisterType<ICartRepository, CartRepository>();
+            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
+            container.RegisterType<UserManager<ApplicationUser>>();
+            container.RegisterType<DbContext, ApplicationDbContext>();
+            container.RegisterType<ApplicationUserManager>();
+            container.RegisterType<AccountController>(new InjectionConstructor());
 
         }
     }

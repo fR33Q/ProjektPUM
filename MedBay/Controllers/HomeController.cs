@@ -28,10 +28,11 @@ namespace MedBay.Controllers
         public ActionResult Index()
         {
             List<Product> products = productRepository.GetAllProducts();
-           // Cart cart = cartRepository.GetOrdersInCart(clientId);
+           // List<Cart> cart = cartRepository.GetOrdersInCart(clientId);
             HomePageViewModel model = new HomePageViewModel
             {
                 Products = products,
+                //Cart = cart
             };
 
        

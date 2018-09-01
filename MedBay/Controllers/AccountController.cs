@@ -9,62 +9,64 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using MedBay.Models;
 using MedBay.DAL.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using MedBay.App_Start;
 
 namespace MedBay.Controllers
 {
     public class AccountController : Controller
     {
-        //private ApplicationSignInManager _signInManager;
-        //private ApplicationUserManager _userManager;
-        //private ApplicationRoleManager _roleManager;
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _roleManager;
 
-        //public AccountController()
-        //{
-        //}
+        public AccountController()
+        {
+        }
 
-        //public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
-        //{
-        //    UserManager = userManager;
-        //    SignInManager = signInManager;
-        //    RoleManager = roleManager;
-        //}
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+            RoleManager = roleManager;
+        }
 
-        //public ApplicationSignInManager SignInManager
-        //{
-        //    get
-        //    {
-        //        return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-        //    }
-        //    private set
-        //    {
-        //        _signInManager = value;
-        //    }
-        //}
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
 
-        //public ApplicationUserManager UserManager
-        //{
-        //    get
-        //    {
-        //        return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-        //    }
-        //    private set
-        //    {
-        //        _userManager = value;
-        //    }
-        //}
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
-        //public ApplicationRoleManager RoleManager
-        //{
-        //    get
-        //    {
-        //        var role = _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
-        //        return role;
-        //    }
-        //    private set
-        //    {
-        //        _roleManager = value;
-        //    }
-        //}
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                var role = _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+                return role;
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
 
         //
         // GET: /Account/Login
@@ -77,33 +79,34 @@ namespace MedBay.Controllers
 
         //
         // POST: /Account/Login
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-        //    // This doesn't count login failures towards account lockout
-        //    // To enable password failures to trigger account lockout, change to shouldLockout: true
-        //    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-        //    switch (result)
-        //    {
-        //        case SignInStatus.Success:
-        //            return RedirectToAction("Index", "Product", new { area = "Admin" });
-        //        case SignInStatus.LockedOut:
-        //            return View("Lockout");
-        //        case SignInStatus.RequiresVerification:
-        //            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-        //        case SignInStatus.Failure:
-        //        default:
-        //            ModelState.AddModelError("", "Invalid login attempt.");
-        //            return View(model);
-        //    }
-        //}
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
+            }
+        
+        }
 
         ////
         //// GET: /Account/VerifyCode
@@ -158,44 +161,45 @@ namespace MedBay.Controllers
 
         //
         //// POST: /Account/Register
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Register(RegisterViewModel model)
-        //{
-        //    const string roleAdmin = "Admin";
-        //    if (ModelState.IsValid)
-        //    {
-        //        var user = new Customer { Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
-        //        var result = await UserManager.CreateAsync(user, model.Password);
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(RegisterViewModel model)
+        {
+            const string roleAdmin = "User";
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
 
-        //        if (result.Succeeded)
-        //        {
-        //            var role = RoleManager.FindByName(roleAdmin);
-        //            if (role == null)
-        //            {
-        //                role = new IdentityRole();
-        //                var roleresult = RoleManager.Create(role);
-        //            }
+                if (result.Succeeded)
+                {
+                    var role = RoleManager.FindByName(roleAdmin);
+                    if (role == null)
+                    {
+                        role = new IdentityRole();
+                        var roleresult = RoleManager.Create(role);
+                    }
 
-        //            var roleResult = await UserManager.AddToRoleAsync(user.Id, roleAdmin);
-        //            if (!roleResult.Succeeded)
-        //            {
-        //                ModelState.AddModelError("", result.Errors.First());
-        //                return View();
-        //            }
-        //            else
-        //            {
-        //                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-        //                return RedirectToAction("Index", "Product", new { area = "Admin" });
-        //            }
-        //        }
-        //        //AddErrors(result);
-        //    }
+                    //TODO: Add roles
+                    //var roleResult = await UserManager.AddToRoleAsync(user.Id, roleAdmin);
+                    //if (!roleResult.Succeeded)
+                    //{
+                    //    ModelState.AddModelError("", result.Errors.First());
+                    //    return View();
+                    //}
+                    //else
+                    //{
+                    //    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    //    return RedirectToAction("Index", "Home");
+                    //}
+                }
+                AddErrors(result);
+            }
 
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
 
         ////
         //// GET: /Account/ConfirmEmail
@@ -410,15 +414,15 @@ namespace MedBay.Controllers
         //    return View(model);
         //}
 
-        ////
-        //// POST: /Account/LogOff
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult LogOff()
-        //{
-        //    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-        //    return RedirectToAction("Index", "Home");
-        //}
+        //
+        // POST: /Account/LogOff
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
+        }
 
         //[AllowAnonymous]
         //public ActionResult Logout()
@@ -459,21 +463,21 @@ namespace MedBay.Controllers
         //// Used for XSRF protection when adding external logins
         //private const string XsrfKey = "XsrfId";
 
-        //private IAuthenticationManager AuthenticationManager
-        //{
-        //    get
-        //    {
-        //        return HttpContext.GetOwinContext().Authentication;
-        //    }
-        //}
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
 
-        //private void AddErrors(IdentityResult result)
-        //{
-        //    foreach (var error in result.Errors)
-        //    {
-        //        ModelState.AddModelError("", error);
-        //    }
-        //}
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
 
         //private ActionResult RedirectToLocal(string returnUrl)
         //{
