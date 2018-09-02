@@ -30,7 +30,8 @@ namespace MedBay.Controllers
                     LastName = customer.LastName,
                     Email = customer.Email,
                     PhoneNumber = customer.PhoneNumber,
-                    Adress = customer.Adress
+                    Adress = customer.Adress,
+                    Customer = customer
                 };
                 return View(model);
             }

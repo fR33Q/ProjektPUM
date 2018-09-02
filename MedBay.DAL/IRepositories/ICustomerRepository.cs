@@ -15,7 +15,7 @@ namespace MedBay.DAL.IRepositories
         List<Customer> GetAllCustomers();
         void AddCustomerAddress(Adress adress);
         int GetAddressIdForCustomer(int customerId);
-
+        void EditCustomerInformation(Customer customer);
 
     }
 }

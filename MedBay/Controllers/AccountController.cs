@@ -144,7 +144,28 @@ namespace MedBay.Controllers
             return RedirectToAction("Index", "Manage");
 
         }
-        
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult EditCustomer(ManageViewModel model)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            var customer = customerRepository.GetUserInformation(currentUserId);
+
+            Customer editedCustomer = new Customer
+            {
+                FirstName = model.Customer.FirstName,
+                LastName = model.Customer.LastName,
+                Email = model.Customer.Email,
+                PhoneNumber = model.Customer.PhoneNumber,
+                Id = customer.Id
+            };
+
+            customerRepository.EditCustomerInformation(editedCustomer);
+            return RedirectToAction("Index", "Manage");
+
+        }
+
 
         //
         // GET: /Account/Register

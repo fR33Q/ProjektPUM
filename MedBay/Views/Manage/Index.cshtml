@@ -34,7 +34,7 @@
     <a class="btn btn-primary" data-toggle="collapse" href="#addAdress" role="button" aria-expanded="false" aria-controls="addAdress">
         Edit your address
     </a>
-   
+
 </p>
 <div class="collapse" id="addAdress">
     @using (Html.BeginForm("AddAddress", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -46,31 +46,77 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Adress.Street, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Adress.Street, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Adress.Street, new { @class = "form-control", required = "required" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Adress.City, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Adress.City, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Adress.City, new { @class = "form-control", required = "required" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Adress.Number, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Adress.Number, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Adress.Number, new { @class = "form-control", required = "required" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Adress.PostalCode, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Adress.PostalCode, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Adress.PostalCode, new { @class = "form-control", required = "required" })
             </div>
         </div>
-     
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" class="btn btn-default" value="Add Address" />
+            </div>
+        </div>
+    }
+</div>
+
+<p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#editCustome" role="button" aria-expanded="false" aria-controls="editCustomer">
+        Edit your account information
+    </a>
+
+</p>
+<div class="collapse" id="editCustome">
+    @using (Html.BeginForm("EditCustomer", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Edit account information</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.FirstName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Customer.FirstName, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.LastName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Customer.LastName, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Customer.Email, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.PhoneNumber, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Customer.PhoneNumber, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Edit" />
             </div>
         </div>
     }

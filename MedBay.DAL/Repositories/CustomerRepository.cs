@@ -55,5 +55,19 @@ namespace MedBay.DAL.Repositories
                         select x.AdressID).FirstOrDefault();
             return addressId;
         }
+
+        public void EditCustomerInformation(Customer customer)
+        {
+            MedbayEntities db = new MedbayEntities();
+            var customerFromDb = (from x in db.Customer
+                                 where x.Id == customer.Id
+                                 select x).FirstOrDefault();
+
+            customerFromDb.FirstName = customer.FirstName;
+            customerFromDb.LastName = customer.LastName;
+            customerFromDb.PhoneNumber = customer.PhoneNumber;
+            customerFromDb.Email = customer.Email;
+            db.SaveChanges();
+        }
     }
 }
