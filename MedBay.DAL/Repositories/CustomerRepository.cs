@@ -33,5 +33,27 @@ namespace MedBay.DAL.Repositories
                         select x).ToList();
             return customerList;
         }
+
+        public void AddCustomerAddress(Adress adress)
+        {
+            MedbayEntities db = new MedbayEntities();
+            var addressFromDb = (from x in db.Adress
+                        where x.Id == adress.Id
+                        select x).FirstOrDefault();
+            addressFromDb.Street = adress.Street;
+            addressFromDb.Number = adress.Number;
+            addressFromDb.PostalCode = adress.PostalCode;
+            addressFromDb.City = adress.City;
+            db.SaveChanges();
+        }
+
+        public int GetAddressIdForCustomer(int customerId)
+        {
+            MedbayEntities db = new MedbayEntities();
+            var addressId = (from x in db.Customer
+                        where x.Id == customerId
+                        select x.AdressID).FirstOrDefault();
+            return addressId;
+        }
     }
 }

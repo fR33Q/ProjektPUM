@@ -29,7 +29,8 @@ namespace MedBay.Controllers
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
                     Email = customer.Email,
-                    PhoneNumber = customer.PhoneNumber
+                    PhoneNumber = customer.PhoneNumber,
+                    Adress = customer.Adress
                 };
                 return View(model);
             }
