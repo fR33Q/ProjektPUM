@@ -1,0 +1,16 @@
+﻿@if (Model.Cart != null)
+{
+    <a class="basket">
+        <span>Your Basket: </span> @*@ViewBag.CartUnits*@
+        <table>
+            @foreach (var c in Model.Cart)
+            {
+                <tr><td>@c.Quantity x @String.Format("{0:c}", 1)</td><td>@c.Product.Product_Name</td></tr>
+            }
+            <tr>
+                <td>Total: @*@String.Format("{0:c}", ViewBag.CartTotalPrice)*@</td>
+                <td>@Html.ActionLink("Check Out", "Index", "Checkout")</td>
+            </tr>
+        </table>
+    </a>
+}

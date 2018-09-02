@@ -11,6 +11,7 @@ using MedBay.Models;
 using MedBay.DAL.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MedBay.App_Start;
+using MedBay.DAL.IRepositories;
 
 namespace MedBay.Controllers
 {
@@ -19,9 +20,10 @@ namespace MedBay.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
-
-        public AccountController()
+        private ICustomerRepository customerRepository;
+        public AccountController(ICustomerRepository customerRepository)
         {
+            this.customerRepository = customerRepository;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
@@ -29,6 +31,7 @@ namespace MedBay.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
             RoleManager = roleManager;
+            
         }
 
         public ApplicationSignInManager SignInManager
@@ -180,6 +183,27 @@ namespace MedBay.Controllers
                         role = new IdentityRole();
                         var roleresult = RoleManager.Create(role);
                     }
+
+                    Customer customer = new Customer
+                    {
+
+
+                        FirstName = model.FirstName,
+                        LastName =  model.LastName,
+                        PhoneNumber = "",
+                        Email = model.Email,
+                        UserID = user.Id,
+                        Adress = new Adress
+                        {
+                            Street = "",
+                            Number = "",
+                            City = "",
+                            PostalCode = ""
+                        }
+
+
+                    };
+                    customerRepository.InsertCustomer(customer);
 
                     //TODO: Add roles
                     //var roleResult = await UserManager.AddToRoleAsync(user.Id, roleAdmin);

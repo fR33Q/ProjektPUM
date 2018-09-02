@@ -3,6 +3,8 @@
 }
 
 @model MedBay.Models.HomePageViewModel
+@Html.Partial("_Basket",Model)
+
 <h2>Products</h2>
 <form action="/Home/Category" method="get" id="category" class="option">
     <span>Category</span>
@@ -18,18 +20,18 @@
 {
     <div class="list-view">
         @foreach (var item in Model.Products)
-            {
-                <div class="list-item">
-                    @*<span class="p-cart">@item.Category</span>*@
-                    @*<span class="p-brand">@item.Price</span>*@
-                    <span class="p-name">@item.Product_Name</span>
-                    <span class="p-description">@item.Product_Description</span>
-                    <span> <img src="~/Images/Products/@item.PictureFileName" style="width: 200px;" /></span>
-                    <div class="add-to-cart">
-                        @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.ProductId}, null)
-                        <span class="p-price">@String.Format("{0:c}", 1)</span>
-                    </div>
-                    @*<span class="p-unit">
+        {
+            <div class="list-item">
+                @*<span class="p-cart">@item.Category</span>*@
+                @*<span class="p-brand">@item.Price</span>*@
+                <span class="p-name">@item.Product_Name</span>
+                <span class="p-description">@item.Product_Description</span>
+                <span> <img src="~/Images/Products/@item.PictureFileName" style="width: 200px;" /></span>
+                <div class="add-to-cart">
+                    @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.ProductId }, null)
+                    <span class="p-price">@String.Format("{0:c}", 1)</span>
+                </div>
+                @*<span class="p-unit">
                         @item.UnitsInStock
                         @if (item.UnitsInStock > 1)
                         {
@@ -40,8 +42,8 @@
                             <text>unit</text>
                         }
                     </span>*@
-                </div>
-            }
+            </div>
+        }
     </div>
 
 

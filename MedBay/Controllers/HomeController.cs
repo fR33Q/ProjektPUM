@@ -27,57 +27,33 @@ namespace MedBay.Controllers
 
         public ActionResult Index()
         {
+            List<Cart> cart;
+            string currentUserId = User.Identity.GetUserId();
+            var customer = customerRepository.GetUserInformation(currentUserId);
             List<Product> products = productRepository.GetAllProducts();
-           // List<Cart> cart = cartRepository.GetOrdersInCart(clientId);
-            HomePageViewModel model = new HomePageViewModel
+            
+            if (customer != null)
             {
-                Products = products,
-                //Cart = cart
-            };
+                cart = cartRepository.GetOrdersInCart(customer.Id);
+                HomePageViewModel model = new HomePageViewModel
+                {
+                    Products = products,
+                    Cart = cart
+                };
 
-       
-            //register z ręki dla sprawdzenia
+                return View(model);
+            }
+            else
+            {
+                HomePageViewModel model = new HomePageViewModel
+                {
+                    Products = products,
+                    Cart = null
+                    
+                };
 
-            //var userStore = new UserStore<IdentityUser>();
-            //userStore.Context.Database.Connection.ConnectionString =
-            //    System.Configuration.ConfigurationManager.ConnectionStrings["MedbayEntitiesAccount"].ConnectionString;
-            //var manager = new UserManager<IdentityUser>(userStore);
-            //var user = new IdentityUser { UserName = "Test" };
-
-    
-            //IdentityResult result =  manager.Create(user, "1234567");
-
-            //if (result.Succeeded)
-            //{
-
-            //    Customer customer = new Customer
-            //    {
-
-
-            //        FirstName = "Test",
-            //        LastName = "Test",
-            //        PhoneNumber = "",
-            //        Email = "",
-            //        UserID = user.Id,
-            //        Adress = new Adress
-            //        {
-            //            Street = "",
-            //            Number = "",
-            //            City = "",
-            //            PostalCode = ""
-            //        }
-
-
-            //    };
-
-
-            //    customerRepository.InsertCustomer(customer);
-            //}
-
-
-
-
-            return View(model);
+                return View(model);
+            }
            
         }
 
@@ -103,10 +79,14 @@ namespace MedBay.Controllers
         }
         public ActionResult AddToCart(int id)
         {
-            var product = productRepository.GetProduct(id);
+            string currentUserId = User.Identity.GetUserId();
+            var customer = customerRepository.GetUserInformation(currentUserId);
+           // var product = productRepository.GetProduct(id);
             Cart cart = new Cart
             {
-                Product = product,
+                ProductID = id,
+                CustomerID = customer.Id,
+                Quantity = 1
             };
             cartRepository.InsertCart(cart);
             return RedirectToAction("Index");
