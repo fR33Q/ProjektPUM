@@ -81,7 +81,6 @@ namespace MedBay.Controllers
         {
             string currentUserId = User.Identity.GetUserId();
             var customer = customerRepository.GetUserInformation(currentUserId);
-           // var product = productRepository.GetProduct(id);
             Cart cart = new Cart
             {
                 ProductID = id,

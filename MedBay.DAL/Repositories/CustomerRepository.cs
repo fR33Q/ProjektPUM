@@ -24,5 +24,14 @@ namespace MedBay.DAL.Repositories
             db.Customer.Add(customer);
             db.SaveChanges();
         }
+
+        public List<Customer> GetAllCustomers()
+        {
+            MedbayEntities db = new MedbayEntities();
+            var customerList = (from x in db.Customer
+
+                        select x).ToList();
+            return customerList;
+        }
     }
 }

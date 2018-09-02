@@ -1,0 +1,29 @@
+﻿@model MedBay.Models.AdminViewModel
+@{
+    ViewBag.Title = "Manage Customers";
+}
+<h2>@ViewBag.Title.</h2>
+<p class="text-success"></p>
+<div>
+    <h4>Edit customers</h4>
+    <hr />
+
+    <table style="width:100%">
+        @foreach (var item in Model.CustomerList)
+         {
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+        </tr>
+        <tr value="@item.Id">
+            <td>@item.FirstName</td>
+            <td>@item.LastName</td>
+            <td>@item.Email</td>
+            <td>@item.PhoneNumber</td>
+        </tr>
+        }
+    </table>
+    
+    </div>

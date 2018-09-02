@@ -71,6 +71,17 @@ namespace MedBay.Controllers
             }
         }
 
+        [AllowAnonymous]
+        public ActionResult Admin()
+        {
+            var customerList = customerRepository.GetAllCustomers();
+            AdminViewModel model = new AdminViewModel
+            {
+                CustomerList = customerList
+            };
+            return View(model);
+        }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
