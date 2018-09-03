@@ -4,26 +4,69 @@
 }
 <h2>@ViewBag.Title.</h2>
 <p class="text-success"></p>
-<div>
-    <h4>Edit customers</h4>
-    <hr />
 
-    <table style="width:100%">
-        @foreach (var item in Model.CustomerList)
-         {
-        <tr>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-        </tr>
-        <tr value="@item.Id">
-            <td>@item.FirstName</td>
-            <td>@item.LastName</td>
-            <td>@item.Email</td>
-            <td>@item.PhoneNumber</td>
-        </tr>
-        }
-    </table>
-    
+
+<p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#editCustomers" role="button" aria-expanded="false" aria-controls="editCustomers">
+        Edit customers
+    </a>
+
+</p>
+<div class="collapse" id="editCustomers">
+    <div>
+        <h4>Edit customers</h4>
+        <hr />
+
+        <table style="width:100%">
+            @foreach (var item in Model.CustomerList)
+        {
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Is Admin?</th>
+                @if (item.isAdmin != true)
+                {
+                <th>Change Roles</th>
+                }
+                else
+                {
+                    <th>Change Status</th>
+                }
+            </tr>
+            <tr value="@item.Id">
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                @if (item.isAdmin == true)
+    {
+            <td style="color:green;">YES</td>
+}
+else
+{
+            <td style="color:red;">NO</td>
+}
+                @if (item.isAdmin != true)
+    {
+            <td>
+                <form>
+                    <input type="button" class="btn btn-primary" value="Add Admin Permission" onclick="location.href ='@Url.Action("AddAdmin", "Account")?UserId=@item.UserID'">
+                </form>
+            </td>
+              }
+              else
+               {
+            <td>
+                <form>
+                    <input type="button" class="btn btn-primary" value="Delete Admin Permission" onclick="location.href ='@Url.Action("DeleteAdmin", "Account")?UserId=@item.UserID'">
+                </form>
+            </td>
+               }
+            </tr>
+             }
+        </table>
+
     </div>
+</div>

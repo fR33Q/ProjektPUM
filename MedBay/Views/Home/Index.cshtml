@@ -30,7 +30,7 @@
                 <span> <img src="~/Images/Products/@item.PictureFileName" style="width: 200px;" /></span>
                 <div class="add-to-cart">
                     @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.ProductId }, null)
-                    <span class="p-price">@String.Format("{0:c}", 1)</span>
+                    <span class="p-price">@String.Format("{0:c}", item.Price)</span>
                 </div>
                 @*<span class="p-unit">
                         @item.UnitsInStock

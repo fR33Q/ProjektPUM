@@ -34,10 +34,10 @@ namespace MedBay.DAL.Repositories
             return customerList;
         }
 
-        public void AddCustomerAddress(Adress adress)
+        public void AddCustomerAddress(Address adress)
         {
             MedbayEntities db = new MedbayEntities();
-            var addressFromDb = (from x in db.Adress
+            var addressFromDb = (from x in db.Address
                         where x.Id == adress.Id
                         select x).FirstOrDefault();
             addressFromDb.Street = adress.Street;
@@ -68,6 +68,20 @@ namespace MedBay.DAL.Repositories
             customerFromDb.PhoneNumber = customer.PhoneNumber;
             customerFromDb.Email = customer.Email;
             db.SaveChanges();
+        }
+
+        public void UpdateIsAdmin(int customerId, bool isAdmin)
+        {
+            MedbayEntities db = new MedbayEntities();
+            var customerFromDb = (from x in db.Customer
+                                  where x.Id == customerId
+                                  select x).FirstOrDefault();
+            if(customerFromDb.isAdmin != isAdmin)
+            {
+                customerFromDb.isAdmin = isAdmin;
+                db.SaveChanges();
+            }
+
         }
     }
 }

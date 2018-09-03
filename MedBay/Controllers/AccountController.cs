@@ -71,7 +71,7 @@ namespace MedBay.Controllers
             }
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Admin()
         {
             var customerList = customerRepository.GetAllCustomers();
@@ -81,6 +81,38 @@ namespace MedBay.Controllers
             };
             return View(model);
         }
+
+        public ActionResult AddAdmin(string UserId)
+        {
+            string roleName = "Admin";
+            
+            if (UserId != null)
+            {
+                var roleresult = UserManager.AddToRole(UserId, roleName);
+
+            }
+            var customer = customerRepository.GetUserInformation(UserId);
+            customerRepository.UpdateIsAdmin(customer.Id, true);
+
+            return RedirectToAction("Admin", "Account");
+        }
+
+        public async Task<ActionResult> DeleteAdmin(string UserId)
+        {
+            string roleName = "Admin";
+
+            var role = await RoleManager.FindByNameAsync(roleName);
+            if (UserId != null)
+            {
+               var roleresult = UserManager.RemoveFromRole(UserId, roleName);
+            
+            }
+            var customer = customerRepository.GetUserInformation(UserId);
+            customerRepository.UpdateIsAdmin(customer.Id, false);
+
+            return RedirectToAction("Admin", "Account");
+        }
+
 
         //
         // GET: /Account/Login
@@ -129,12 +161,12 @@ namespace MedBay.Controllers
             string currentUserId = User.Identity.GetUserId();
             var customer = customerRepository.GetUserInformation(currentUserId);
             var addressId = customerRepository.GetAddressIdForCustomer(customer.Id);
-            Adress adress = new Adress
+            Address adress = new Address
             {
-                        Street = model.Adress.Street,
-                        Number = model.Adress.Number,
-                        City = model.Adress.City,
-                        PostalCode = model.Adress.PostalCode,
+                        Street = model.Address.Street,
+                        Number = model.Address.Number,
+                        City = model.Address.City,
+                        PostalCode = model.Address.PostalCode,
                         Id = addressId
               
            };
@@ -182,7 +214,7 @@ namespace MedBay.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            const string roleAdmin = "User";
+            const string role = "User";
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -190,13 +222,7 @@ namespace MedBay.Controllers
 
                 if (result.Succeeded)
                 {
-                    var role = RoleManager.FindByName(roleAdmin);
-                    if (role == null)
-                    {
-                        role = new IdentityRole();
-                        var roleresult = RoleManager.Create(role);
-                    }
-
+                  
                     Customer customer = new Customer
                     {
 
@@ -206,7 +232,8 @@ namespace MedBay.Controllers
                         PhoneNumber = "",
                         Email = model.Email,
                         UserID = user.Id,
-                        Adress = new Adress
+                        isAdmin = false,
+                        Address = new Address
                         {
                             Street = "",
                             Number = "",
@@ -218,18 +245,18 @@ namespace MedBay.Controllers
                     };
                     customerRepository.InsertCustomer(customer);
 
-                    //TODO: Add roles
-                    //var roleResult = await UserManager.AddToRoleAsync(user.Id, roleAdmin);
-                    //if (!roleResult.Succeeded)
-                    //{
-                    //    ModelState.AddModelError("", result.Errors.First());
-                    //    return View();
-                    //}
-                    //else
-                    //{
-                    //    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    //    return RedirectToAction("Index", "Home");
-                    //}
+
+                    var roleResult = await UserManager.AddToRoleAsync(user.Id, role);
+                    if (!roleResult.Succeeded)
+                    {
+                        ModelState.AddModelError("", result.Errors.First());
+                        return View();
+                    }
+                    else
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 AddErrors(result);
             }

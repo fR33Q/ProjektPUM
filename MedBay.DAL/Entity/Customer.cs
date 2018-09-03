@@ -28,8 +28,9 @@ namespace MedBay.DAL.Entity
         public int AdressID { get; set; }
         public string UserID { get; set; }
         public string Email { get; set; }
+        public Nullable<bool> isAdmin { get; set; }
     
-        public virtual Adress Adress { get; set; }
+        public virtual Address Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Cart { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

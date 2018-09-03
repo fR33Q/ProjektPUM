@@ -5,31 +5,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="42b56701dc224e16a9c79d382f7286ca" Name="Diagram1">
-        <EntityTypeShape EntityType="MedbayModel.Adress" Width="1.5" PointX="0.75" PointY="9.25" />
-        <EntityTypeShape EntityType="MedbayModel.Cart" Width="1.5" PointX="5.25" PointY="1.125" />
-        <EntityTypeShape EntityType="MedbayModel.Category" Width="1.5" PointX="0.75" PointY="5.5" />
-        <EntityTypeShape EntityType="MedbayModel.Customer" Width="1.5" PointX="3" PointY="8.875" />
-        <EntityTypeShape EntityType="MedbayModel.database_firewall_rules" Width="1.5" PointX="5.75" PointY="4.75" />
-        <EntityTypeShape EntityType="MedbayModel.Order" Width="1.5" PointX="5.25" PointY="8.375" />
-        <EntityTypeShape EntityType="MedbayModel.PaymentMethod" Width="1.5" PointX="3" PointY="12.75" />
-        <EntityTypeShape EntityType="MedbayModel.Price" Width="1.5" PointX="0.75" PointY="1.5" />
-        <EntityTypeShape EntityType="MedbayModel.Product" Width="1.5" PointX="3" PointY="1" />
-        <EntityTypeShape EntityType="MedbayModel.TransportMethod" Width="1.5" PointX="3" PointY="6.25" />
-        <EntityTypeShape EntityType="MedbayModel.database_firewall_rules1" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MedbayModel.Address" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MedbayModel.AspNetRoles" Width="1.5" PointX="8.75" PointY="8.625" />
+        <EntityTypeShape EntityType="MedbayModel.AspNetUserClaims" Width="1.5" PointX="13.25" PointY="7.125" />
+        <EntityTypeShape EntityType="MedbayModel.AspNetUserLogins" Width="1.5" PointX="13.25" PointY="9.875" />
+        <EntityTypeShape EntityType="MedbayModel.AspNetUsers" Width="1.5" PointX="11" PointY="7.5" />
+        <EntityTypeShape EntityType="MedbayModel.Cart" Width="1.5" PointX="8.25" PointY="3.625" />
+        <EntityTypeShape EntityType="MedbayModel.Category" Width="1.5" PointX="3.75" PointY="9.875" />
+        <EntityTypeShape EntityType="MedbayModel.Customer" Width="1.5" PointX="3" PointY="3.25" />
+        <EntityTypeShape EntityType="MedbayModel.Order" Width="1.5" PointX="5.25" PointY="2.875" />
+        <EntityTypeShape EntityType="MedbayModel.PaymentMethod" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="MedbayModel.Product" Width="1.5" PointX="6" PointY="9.5" />
+        <EntityTypeShape EntityType="MedbayModel.TransportMethod" Width="1.5" PointX="3" PointY="13.125" />
         <AssociationConnector Association="MedbayModel.FK_CUSTOMER_ADDRESS" />
+        <AssociationConnector Association="MedbayModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="MedbayModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="MedbayModel.FK_Cart_Customer" />
         <AssociationConnector Association="MedbayModel.FK_CART_PRODUCT" />
         <AssociationConnector Association="MedbayModel.FK_PRODUCT_CATEGORY" />
         <AssociationConnector Association="MedbayModel.FK_ORDER_CUSTOMER" />
         <AssociationConnector Association="MedbayModel.FK_ORDER_PAYMENT_METHOD" />
         <AssociationConnector Association="MedbayModel.FK_ORDER_TRANSPORT_METHOD" />
-        <AssociationConnector Association="MedbayModel.FK_Product_Price" />
-        <EntityTypeShape EntityType="MedbayModel.AspNetRoles" Width="1.5" PointX="7.375" PointY="9.5" />
-        <EntityTypeShape EntityType="MedbayModel.AspNetUserClaims" Width="1.5" PointX="11.875" PointY="8" />
-        <EntityTypeShape EntityType="MedbayModel.AspNetUserLogins" Width="1.5" PointX="11.875" PointY="10.75" />
-        <EntityTypeShape EntityType="MedbayModel.AspNetUsers" Width="1.5" PointX="9.625" PointY="8.375" />
-        <AssociationConnector Association="MedbayModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="MedbayModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="MedbayModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>

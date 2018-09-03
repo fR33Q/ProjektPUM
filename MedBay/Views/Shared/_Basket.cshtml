@@ -5,7 +5,7 @@
         <table>
             @foreach (var c in Model.Cart)
             {
-                <tr><td>@c.Quantity x @String.Format("{0:c}", 1)</td><td>@c.Product.Product_Name</td>
+                <tr><td>@c.Quantity x @String.Format("{0:c}", @c.Product.Price)</td><td>@c.Product.Product_Name</td>
             <td align='center'>
                 <form>
                     <input type="button" value="Delete" onclick="location.href ='@Url.Action("DeleteCart", "Home")?id=@c.Id'">

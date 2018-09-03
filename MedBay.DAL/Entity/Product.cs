@@ -25,11 +25,11 @@ namespace MedBay.DAL.Entity
         public string Product_Description { get; set; }
         public string PictureFileName { get; set; }
         public int CategoryID { get; set; }
-        public int PriceID { get; set; }
+        public int Price { get; set; }
+        public int UnitsInStock { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Cart { get; set; }
         public virtual Category Category { get; set; }
-        public virtual Price Price { get; set; }
     }
 }

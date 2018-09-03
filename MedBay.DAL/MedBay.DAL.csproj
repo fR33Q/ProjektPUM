@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Entity\Adress.cs">
+    <Compile Include="Entity\Address.cs">
       <DependentUpon>MedbayEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\AspNetRoles.cs">
@@ -80,12 +80,6 @@
     <Compile Include="Entity\Customer.cs">
       <DependentUpon>MedbayEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\database_firewall_rules.cs">
-      <DependentUpon>MedbayEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\database_firewall_rules1.cs">
-      <DependentUpon>MedbayEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\MedbayEntity.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -105,9 +99,6 @@
       <DependentUpon>MedbayEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\PaymentMethod.cs">
-      <DependentUpon>MedbayEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Price.cs">
       <DependentUpon>MedbayEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Product.cs">

@@ -13,9 +13,10 @@ namespace MedBay.DAL.IRepositories
 
         void InsertCustomer(Customer customer);
         List<Customer> GetAllCustomers();
-        void AddCustomerAddress(Adress adress);
+        void AddCustomerAddress(Address adress);
         int GetAddressIdForCustomer(int customerId);
         void EditCustomerInformation(Customer customer);
+        void UpdateIsAdmin(int customerId, bool isAdmin);
 
     }
 }
