@@ -19,6 +19,7 @@ namespace MedBay.DAL.Entity
         public int Cart_Price { get; set; }
         public int Quantity { get; set; }
         public int CustomerID { get; set; }
+        public int TotalCartPrice { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Product Product { get; set; }

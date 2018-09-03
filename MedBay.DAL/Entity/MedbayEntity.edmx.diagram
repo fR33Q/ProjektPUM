@@ -10,7 +10,6 @@
         <EntityTypeShape EntityType="MedbayModel.AspNetUserClaims" Width="1.5" PointX="13.25" PointY="7.125" />
         <EntityTypeShape EntityType="MedbayModel.AspNetUserLogins" Width="1.5" PointX="13.25" PointY="9.875" />
         <EntityTypeShape EntityType="MedbayModel.AspNetUsers" Width="1.5" PointX="11" PointY="7.5" />
-        <EntityTypeShape EntityType="MedbayModel.Cart" Width="1.5" PointX="8.25" PointY="3.625" />
         <EntityTypeShape EntityType="MedbayModel.Category" Width="1.5" PointX="3.75" PointY="9.875" />
         <EntityTypeShape EntityType="MedbayModel.Customer" Width="1.5" PointX="3" PointY="3.25" />
         <EntityTypeShape EntityType="MedbayModel.Order" Width="1.5" PointX="5.25" PointY="2.875" />
@@ -20,13 +19,14 @@
         <AssociationConnector Association="MedbayModel.FK_CUSTOMER_ADDRESS" />
         <AssociationConnector Association="MedbayModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="MedbayModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="MedbayModel.FK_Cart_Customer" />
-        <AssociationConnector Association="MedbayModel.FK_CART_PRODUCT" />
         <AssociationConnector Association="MedbayModel.FK_PRODUCT_CATEGORY" />
         <AssociationConnector Association="MedbayModel.FK_ORDER_CUSTOMER" />
         <AssociationConnector Association="MedbayModel.FK_ORDER_PAYMENT_METHOD" />
         <AssociationConnector Association="MedbayModel.FK_ORDER_TRANSPORT_METHOD" />
         <AssociationConnector Association="MedbayModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="MedbayModel.Cart" Width="1.5" PointX="8.25" PointY="4.5" />
+        <AssociationConnector Association="MedbayModel.FK_Cart_Customer" />
+        <AssociationConnector Association="MedbayModel.FK_CART_PRODUCT" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

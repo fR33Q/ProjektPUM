@@ -1,7 +1,7 @@
 ﻿@if (Model.Cart != null)
 {
     <a class="basket">
-        <span>Your Basket: </span> @*@ViewBag.CartUnits*@
+        <span>Your Basket: </span> @Model.TotalCount
         <table>
             @foreach (var c in Model.Cart)
             {
@@ -14,7 +14,7 @@
             </tr>
             }
             <tr>
-                <td>Total: @*@String.Format("{0:c}", ViewBag.CartTotalPrice)*@</td>
+                <td>Total: @String.Format("{0:c}", Model.TotalPrice)</td>
                 <td>@Html.ActionLink("Check Out", "Index", "Checkout")</td>
             </tr>
         </table>

@@ -75,6 +75,7 @@
           <Property Name="Cart_Price" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="TotalCartPrice" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -350,7 +351,6 @@
           <EntitySet Name="AspNetUserClaims" EntityType="MedbayModel.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="MedbayModel.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="MedbayModel.AspNetUsers" />
-          <EntitySet Name="Cart" EntityType="MedbayModel.Cart" />
           <EntitySet Name="Category" EntityType="MedbayModel.Category" />
           <EntitySet Name="Customer" EntityType="MedbayModel.Customer" />
           <EntitySet Name="Order" EntityType="MedbayModel.Order" />
@@ -368,14 +368,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="MedbayModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cart_Customer" Association="MedbayModel.FK_Cart_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CART_PRODUCT" Association="MedbayModel.FK_CART_PRODUCT">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="Cart" EntitySet="Cart" />
           </AssociationSet>
           <AssociationSet Name="FK_PRODUCT_CATEGORY" Association="MedbayModel.FK_PRODUCT_CATEGORY">
             <End Role="Category" EntitySet="Category" />
@@ -396,6 +388,15 @@
           <AssociationSet Name="AspNetUserRoles" Association="MedbayModel.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="Cart" EntityType="MedbayModel.Cart" />
+          <AssociationSet Name="FK_Cart_Customer" Association="MedbayModel.FK_Cart_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CART_PRODUCT" Association="MedbayModel.FK_CART_PRODUCT">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Cart" EntitySet="Cart" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Address">
@@ -458,18 +459,6 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="MedbayModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="MedbayModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
-        <EntityType Name="Cart">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="Cart_Price" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="CustomerID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="MedbayModel.FK_Cart_Customer" FromRole="Cart" ToRole="Customer" />
-          <NavigationProperty Name="Product" Relationship="MedbayModel.FK_CART_PRODUCT" FromRole="Cart" ToRole="Product" />
-        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="Id" />
@@ -492,8 +481,8 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isAdmin" Type="Boolean" />
           <NavigationProperty Name="Address" Relationship="MedbayModel.FK_CUSTOMER_ADDRESS" FromRole="Customer" ToRole="Address" />
-          <NavigationProperty Name="Cart" Relationship="MedbayModel.FK_Cart_Customer" FromRole="Customer" ToRole="Cart" />
           <NavigationProperty Name="Order" Relationship="MedbayModel.FK_ORDER_CUSTOMER" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Cart" Relationship="MedbayModel.FK_Cart_Customer" FromRole="Customer" ToRole="Cart" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -534,8 +523,8 @@
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
           <Property Name="Price" Type="Int32" Nullable="false" />
           <Property Name="UnitsInStock" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cart" Relationship="MedbayModel.FK_CART_PRODUCT" FromRole="Product" ToRole="Cart" />
           <NavigationProperty Name="Category" Relationship="MedbayModel.FK_PRODUCT_CATEGORY" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Cart" Relationship="MedbayModel.FK_CART_PRODUCT" FromRole="Product" ToRole="Cart" />
         </EntityType>
         <EntityType Name="TransportMethod">
           <Key>
@@ -583,30 +572,6 @@
             </Principal>
             <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cart_Customer">
-          <End Type="MedbayModel.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="MedbayModel.Cart" Role="Cart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Cart">
-              <PropertyRef Name="CustomerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CART_PRODUCT">
-          <End Type="MedbayModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="MedbayModel.Cart" Role="Cart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="Cart">
-              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -661,6 +626,43 @@
         <Association Name="AspNetUserRoles">
           <End Type="MedbayModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="MedbayModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Cart_Price" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="TotalCartPrice" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="MedbayModel.FK_Cart_Customer" FromRole="Cart" ToRole="Customer" />
+          <NavigationProperty Name="Product" Relationship="MedbayModel.FK_CART_PRODUCT" FromRole="Cart" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Cart_Customer">
+          <End Type="MedbayModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="MedbayModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CART_PRODUCT">
+          <End Type="MedbayModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="MedbayModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -720,17 +722,6 @@
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Cart">
-            <EntityTypeMapping TypeName="MedbayModel.Cart">
-              <MappingFragment StoreEntitySet="Cart">
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Cart_Price" ColumnName="Cart_Price" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -814,6 +805,18 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Cart">
+            <EntityTypeMapping TypeName="MedbayModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="TotalCartPrice" ColumnName="TotalCartPrice" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Cart_Price" ColumnName="Cart_Price" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

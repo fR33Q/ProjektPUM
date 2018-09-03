@@ -1,0 +1,84 @@
+﻿@model MedBay.Models.CheckoutViewModel
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    @*<script>
+        function UpdateTotalPrice() {
+            $.ajax({
+                type: 'GET',
+                url: "Checkout/UpdateTotal",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    if (msg.d == "$0.00") {
+                        location.reload();
+                        return;
+                    }
+
+                    $('#totalPrice').text(msg.d);
+                }
+            })
+        }
+
+        function Change(el, type, pid) {
+            var data = {
+                'type': type,
+                'pId': pid
+            };
+            $.ajax({
+                type: 'POST',
+                url: "Checkout/QuanityChange",
+                data: "{ 'type': " + type + ", 'pId': " + pid + "}",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    if (msg.d == 0) {
+                        el.parentNode.parentNode.remove();
+                    } else {
+                        $(el).siblings('span')[0].innerHTML = msg.d
+                    }
+                    UpdateTotalPrice()
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    debugger;
+                }
+            });
+        }
+    </script>*@
+}
+
+<h2>Shopping Cart</h2>
+
+@if (Model.Carts != null)
+{
+    <table class="cart-page">
+        @foreach (var item in Model.Carts)
+        {
+            <tr>
+                <td><span class="p-name">@item.Product.Product_Name</span> </td>
+                <td><span class="p-name">@String.Format("{0:c}", item.Product.Price)</span> </td>
+                <td>
+                    <a class="quantity" onclick="Change(this, 1, @item.ProductID)">+</a>
+                    <span class="p-name">@item.Quantity</span>
+                    <a class="quantity" onclick="Change(this, 0,  @item.ProductID)">-</a>
+                    <a class="remove" onclick="Change(this, -1,  @item.ProductID)">Remove</a>
+                </td>
+            </tr>
+        }
+        <tr><td>Total: </td><td id="totalPrice" colspan="2">@String.Format("{0:c}", Model.TotalPrice)</td></tr>
+    </table>
+    <div class="button">
+        @Html.ActionLink("Clear Cart", "Clear", "Checkout", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Countinue", "Purchase", "Checkout", null, new { @class = "btn btn-info" })
+    </div>
+
+
+}
+else
+{
+    <br />
+    <div id="EmptyDataMsg" class="alert alert-info">
+        <strong>Welcome!</strong> Your shopping cart is currently empty. Let's start shopping
+    </div>
+}

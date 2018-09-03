@@ -35,10 +35,14 @@ namespace MedBay.Controllers
             if (customer != null)
             {
                 cart = cartRepository.GetOrdersInCart(customer.Id);
+                var totalPrice = cart.Select(x => x.Cart_Price).Sum();
+                var totalCount = cart.Select(x => x.Quantity).Sum();
                 HomePageViewModel model = new HomePageViewModel
                 {
                     Products = products,
-                    Cart = cart
+                    Cart = cart,
+                    TotalPrice = totalPrice,
+                    TotalCount = totalCount
                 };
 
                 return View(model);
@@ -80,12 +84,17 @@ namespace MedBay.Controllers
         public ActionResult AddToCart(int id)
         {
             string currentUserId = User.Identity.GetUserId();
+            var product = productRepository.GetProduct(id);
             var customer = customerRepository.GetUserInformation(currentUserId);
+            var totalPrice = 1 * product.Price;
             Cart cart = new Cart
             {
                 ProductID = id,
                 CustomerID = customer.Id,
-                Quantity = 1
+                Quantity = 1,
+                Cart_Price = product.Price,
+                TotalCartPrice = totalPrice
+
             };
             cartRepository.InsertCart(cart);
             return RedirectToAction("Index");

@@ -6,12 +6,9 @@ using System.Web;
 
 namespace MedBay.Models
 {
-    public class HomePageViewModel
+    public class CheckoutViewModel
     {
-        public List<Product> Products { get; set; }
-        public List<Cart> Cart { get; set; }
-
+        public List<Cart> Carts { get; set; }
         public int TotalPrice { get; set; }
-        public int TotalCount { get; set; }
     }
 }
