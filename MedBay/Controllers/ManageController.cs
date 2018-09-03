@@ -12,9 +12,11 @@ namespace MedBay.Controllers
     public class ManageController : Controller
     {
         private ICustomerRepository customerRepository;
-        public ManageController(ICustomerRepository customerRepository)
+        private IProductRepository productRepository;
+        public ManageController(ICustomerRepository customerRepository, IProductRepository productRepository)
         {
             this.customerRepository = customerRepository;
+            this.productRepository = productRepository;
         }
 
         // GET: Manage
@@ -39,6 +41,12 @@ namespace MedBay.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+        }
+
+        public ActionResult AddProduct(AdminViewModel model)
+        {
+            productRepository.InsertProduct(model.Product);
+            return RedirectToAction("Admin", "Account");
         }
     }
 }

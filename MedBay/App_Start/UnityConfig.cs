@@ -57,7 +57,7 @@ namespace MedBay
             container.RegisterType<UserManager<ApplicationUser>>();
             container.RegisterType<DbContext, ApplicationDbContext>();
             container.RegisterType<ApplicationUserManager>();
-            container.RegisterType<AccountController>(new InjectionConstructor(new ResolvedParameter<ICustomerRepository>()));
+            container.RegisterType<AccountController>(new InjectionConstructor(new ResolvedParameter<ICustomerRepository>(), new ResolvedParameter<IProductRepository>()));
 
         }
     }

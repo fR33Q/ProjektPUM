@@ -21,9 +21,11 @@ namespace MedBay.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
         private ICustomerRepository customerRepository;
-        public AccountController(ICustomerRepository customerRepository)
+        private IProductRepository productRepository;
+        public AccountController(ICustomerRepository customerRepository, IProductRepository productRepository)
         {
             this.customerRepository = customerRepository;
+            this.productRepository = productRepository;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
@@ -75,13 +77,17 @@ namespace MedBay.Controllers
         public ActionResult Admin()
         {
             var customerList = customerRepository.GetAllCustomers();
+            var productList = productRepository.GetAllProducts();
+            var categoryList = productRepository.GetAllCategories();
             AdminViewModel model = new AdminViewModel
             {
-                CustomerList = customerList
+                CustomerList = customerList,
+                ProductList = productList,
+                Categories = categoryList
             };
             return View(model);
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult AddAdmin(string UserId)
         {
             string roleName = "Admin";
@@ -96,7 +102,7 @@ namespace MedBay.Controllers
 
             return RedirectToAction("Admin", "Account");
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteAdmin(string UserId)
         {
             string roleName = "Admin";

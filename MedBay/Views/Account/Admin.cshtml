@@ -19,54 +19,149 @@
 
         <table style="width:100%">
             @foreach (var item in Model.CustomerList)
-        {
-            <tr>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Is Admin?</th>
-                @if (item.isAdmin != true)
-                {
-                <th>Change Roles</th>
-                }
-                else
-                {
-                    <th>Change Status</th>
-                }
-            </tr>
-            <tr value="@item.Id">
-                <td>@item.FirstName</td>
-                <td>@item.LastName</td>
-                <td>@item.Email</td>
-                <td>@item.PhoneNumber</td>
-                @if (item.isAdmin == true)
-    {
-            <td style="color:green;">YES</td>
-}
-else
-{
-            <td style="color:red;">NO</td>
-}
-                @if (item.isAdmin != true)
-    {
-            <td>
-                <form>
-                    <input type="button" class="btn btn-primary" value="Add Admin Permission" onclick="location.href ='@Url.Action("AddAdmin", "Account")?UserId=@item.UserID'">
-                </form>
-            </td>
-              }
-              else
-               {
-            <td>
-                <form>
-                    <input type="button" class="btn btn-primary" value="Delete Admin Permission" onclick="location.href ='@Url.Action("DeleteAdmin", "Account")?UserId=@item.UserID'">
-                </form>
-            </td>
-               }
-            </tr>
-             }
+            {
+                <tr>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Is Admin?</th>
+                    @if (item.isAdmin != true)
+                    {
+                        <th>Change Roles</th>
+                    }
+                    else
+                    {
+                        <th>Change Status</th>
+                    }
+                </tr>
+                <tr value="@item.Id">
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    @if (item.isAdmin == true)
+                    {
+                        <td style="color:green;">YES</td>
+                    }
+                    else
+                    {
+                        <td style="color:red;">NO</td>
+                    }
+                    @if (item.isAdmin != true)
+                    {
+                        <td>
+                            <form>
+                                <input type="button" class="btn btn-primary" value="Add Admin Permission" onclick="location.href ='@Url.Action("AddAdmin", "Account")?UserId=@item.UserID'">
+                            </form>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <form>
+                                <input type="button" class="btn btn-primary" value="Delete Admin Permission" onclick="location.href ='@Url.Action("DeleteAdmin", "Account")?UserId=@item.UserID'">
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
         </table>
 
     </div>
+</div>
+
+<p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#editProducts" role="button" aria-expanded="false" aria-controls="editProducts">
+        Edit products
+    </a>
+
+</p>
+<div class="collapse" id="editProducts">
+    <div>
+        <h4>Add Product</h4>
+        <hr />
+
+        <table style="width:100%">
+            @foreach (var item in Model.ProductList)
+            {
+                <tr>
+                    <th>Product name</th>
+                    <th>Product Description</th>
+                    <th>Image Name</th>
+                    <th>CategoryID</th>
+                    <th>Price </th>
+                    <th>Units In Stock</th>
+
+                </tr>
+                <tr value="@item.ProductId">
+                    <td>@item.Product_Name</td>
+                    <td>@item.Product_Description</td>
+                    <td>@item.PictureFileName</td>
+                    <td>@item.CategoryID</td>
+                    <td>@item.Price</td>
+                    <td>@item.UnitsInStock</td>
+                </tr>
+            }
+        </table>
+
+    </div>
+</div>
+
+<p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#addProduct" role="button" aria-expanded="false" aria-controls="addProduct">
+       Add products
+    </a>
+
+</p>
+<div class="collapse" id="addProduct">
+    @using (Html.BeginForm("AddProduct", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Add product</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Product.Product_Name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Product.Product_Name, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Product.Product_Description, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Product.Product_Description, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Product.PictureFileName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Product.PictureFileName, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Product.CategoryID, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.Product.CategoryID, new SelectList(Model.Categories, "Id", "Name" ), new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Product.Price, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Product.Price, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Product.UnitsInStock, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Product.UnitsInStock, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Add Product" />
+            </div>
+        </div>
+    }
 </div>

@@ -22,28 +22,31 @@
     <div class="list-view">
         @foreach (var item in Model.Products)
         {
-            <div class="list-item">
-                @*<span class="p-cart">@item.Category</span>*@
-                @*<span class="p-brand">@item.Price</span>*@
-                <span class="p-name">@item.Product_Name</span>
-                <span class="p-description">@item.Product_Description</span>
-                <span> <img src="~/Images/Products/@item.PictureFileName" style="width: 200px;" /></span>
-                <div class="add-to-cart">
-                    @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.ProductId }, null)
-                    <span class="p-price">@String.Format("{0:c}", item.Price)</span>
-                </div>
-                @*<span class="p-unit">
-                        @item.UnitsInStock
-                        @if (item.UnitsInStock > 1)
-                        {
-                            <text>units</text>
-                        }
-                        else
-                        {
-                            <text>unit</text>
-                        }
-                    </span>*@
-            </div>
+        <div class="list-item">
+            @*<span class="p-cart">@item.Category.Name</span>*@
+            <span class="p-brand">@item.Price PLN</span>
+            <span class="p-name">@item.Product_Name</span>
+            <span class="p-description">@item.Product_Description</span>
+            <span> <img src="~/Images/Products/@item.PictureFileName" style="width: 200px;" /></span>
+            @if (this.User.IsInRole("User"))
+            {
+        <div class="add-to-cart">
+            @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.ProductId }, null)
+            <span class="p-price">@String.Format("{0:c}", item.Price)</span>
+        </div>
+            }
+        <span class="p-unit">
+        @item.UnitsInStock
+        @if (item.UnitsInStock > 1)
+        {
+            <text>units</text>
+        }
+        else
+        {
+            <text>unit</text>
+        }
+    </span>
+        </div>
         }
     </div>
 

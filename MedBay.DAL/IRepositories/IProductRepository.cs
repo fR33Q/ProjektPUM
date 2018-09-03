@@ -16,6 +16,7 @@ namespace MedBay.DAL.IRepositories
         List<Product> GetAllProducts();
         List<Product> GetProductsByCategory(int categoryId);
         int GetCategoryId(string categoryName);
+        List<Category> GetAllCategories();
 
 
     }

@@ -133,5 +133,16 @@ namespace MedBay.DAL.Repositories
                 }
             
         }
+
+        public List<Category> GetAllCategories()
+        {
+            using (MedbayEntities context = new MedbayEntities())
+            {
+                var categoryList = (from x in context.Category
+                                  select x).ToList();
+                return categoryList;
+            }
+
+        }
     }
 }
