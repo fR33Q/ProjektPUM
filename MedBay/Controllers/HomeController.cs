@@ -18,6 +18,8 @@ namespace MedBay.Controllers
         private IProductRepository productRepository;
         private ICartRepository cartRepository;
         private ICustomerRepository customerRepository;
+        private List<Cart> cart;
+        private List<Product> products;
         public HomeController(IProductRepository productRepository, ICartRepository cartRepository, ICustomerRepository customerRepository)
         {
             this.productRepository = productRepository;
@@ -25,12 +27,26 @@ namespace MedBay.Controllers
             this.customerRepository = customerRepository;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string catName)
         {
-            List<Cart> cart;
             string currentUserId = User.Identity.GetUserId();
             var customer = customerRepository.GetUserInformation(currentUserId);
-            List<Product> products = productRepository.GetAllProducts();
+           
+
+            var categoryId = productRepository.GetCategoryId(catName);
+            if (catName == "")
+            {
+                products = productRepository.GetAllProducts();
+            }
+            else if (catName != null)
+            {
+                products = productRepository.GetProductsByCategory(categoryId);
+
+            }
+            else
+            {
+                products = productRepository.GetAllProducts();
+            }
             
             if (customer != null)
             {
@@ -61,26 +77,6 @@ namespace MedBay.Controllers
            
         }
 
-        public ActionResult Category(string catName)
-        {
-            List<Product> products;
-            var categoryId = productRepository.GetCategoryId(catName);
-            if (catName == "")
-            {
-               products = productRepository.GetAllProducts();
-            }
-            else
-            {
-               products = productRepository.GetProductsByCategory(categoryId);
-            }
-           
-            HomePageViewModel model = new HomePageViewModel
-            {
-                Products = products,
-            };
-
-            return View("Index",model);
-        }
         public ActionResult AddToCart(int id)
         {
             string currentUserId = User.Identity.GetUserId();
