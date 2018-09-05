@@ -19,7 +19,7 @@ namespace MedBay.Controllers
         private ICartRepository cartRepository;
         private ICustomerRepository customerRepository;
         private List<Cart> cart;
-        private List<Product> products;
+        private List<Product> productList;
         public HomeController(IProductRepository productRepository, ICartRepository cartRepository, ICustomerRepository customerRepository)
         {
             this.productRepository = productRepository;
@@ -31,22 +31,9 @@ namespace MedBay.Controllers
         {
             string currentUserId = User.Identity.GetUserId();
             var customer = customerRepository.GetUserInformation(currentUserId);
-           
 
-            var categoryId = productRepository.GetCategoryId(catName);
-            if (catName == "")
-            {
-                products = productRepository.GetAllProducts();
-            }
-            else if (catName != null)
-            {
-                products = productRepository.GetProductsByCategory(categoryId);
 
-            }
-            else
-            {
-                products = productRepository.GetAllProducts();
-            }
+            var products = GetProducts(catName);
             
             if (customer != null)
             {
@@ -102,6 +89,24 @@ namespace MedBay.Controllers
             return RedirectToAction("Index");
         }
 
+
+        private List<Product> GetProducts(string categoryName)
+        {
+            
+            var categoryId = productRepository.GetCategoryId(categoryName);
+            if (string.IsNullOrEmpty(categoryName))
+            {
+                productList = productRepository.GetAllProducts();
+            }
+            else
+            {
+                productList = productRepository.GetProductsByCategory(categoryId);
+
+            }
+          
+            return productList;
+
+        }
         
 
     }
