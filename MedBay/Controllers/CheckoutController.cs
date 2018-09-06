@@ -26,14 +26,26 @@ namespace MedBay.Controllers
         {
             string currentUserId = User.Identity.GetUserId();
             var customer = customerRepository.GetUserInformation(currentUserId);
-            var carts = cartRepository.GetOrdersInCart(customer.Id);
-            var totalPrice = carts.Select(x => x.Cart_Price).Sum();
+            var cartItems = cartRepository.GetOrdersInCart(customer.Id);
+            var totalPrice = cartItems.Select(x => x.Cart_Price).Sum();
             CheckoutViewModel model = new CheckoutViewModel
             {
-                Carts = carts,
-                TotalPrice = totalPrice
+                CartItems = cartItems,
+                TotalCartPrice = totalPrice
             };
             return View(model);
+        }
+
+        public ActionResult ClearCart()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            var customer = customerRepository.GetUserInformation(currentUserId);
+            var cartItems = cartRepository.GetOrdersInCart(customer.Id);
+       
+
+            cartRepository.DeleteCart(cartItems);
+
+            return RedirectToAction("Index");
         }
     }
 }

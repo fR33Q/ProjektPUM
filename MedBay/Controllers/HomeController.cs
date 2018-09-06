@@ -85,7 +85,7 @@ namespace MedBay.Controllers
 
         public ActionResult DeleteCart(int id)
         {
-            cartRepository.DeleteCart(id);
+            cartRepository.DeleteCartItem(id);
             return RedirectToAction("Index");
         }
 

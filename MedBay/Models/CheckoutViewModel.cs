@@ -8,7 +8,7 @@ namespace MedBay.Models
 {
     public class CheckoutViewModel
     {
-        public List<Cart> Carts { get; set; }
-        public int TotalPrice { get; set; }
+        public List<Cart> CartItems { get; set; }
+        public int TotalCartPrice { get; set; }
     }
 }

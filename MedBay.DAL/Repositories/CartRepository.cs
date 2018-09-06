@@ -28,7 +28,7 @@ namespace MedBay.DAL.Repositories
             }
         }
 
-        public string DeleteCart(int id)
+        public string DeleteCartItem(int id)
         {
             try
             {
@@ -38,6 +38,32 @@ namespace MedBay.DAL.Repositories
                 db.Cart.Attach(cart);
                 db.Cart.Remove(cart);
                 db.SaveChanges();
+
+                return "Cart was succesfully deleted";
+            }
+            catch (Exception e)
+            {
+                return "Error:" + e;
+            }
+        }
+
+        public string DeleteCart(List<Cart> cartItems)
+        {
+            try
+            {
+                MedbayEntities db = new MedbayEntities();
+                foreach (var cartItem in cartItems)
+                {
+                    Cart cart = db.Cart.Find(cartItem.Id);
+
+                    if (cart != null)
+                    {
+                        db.Cart.Attach(cart);
+                        db.Cart.Remove(cart);
+                    }
+                    db.SaveChanges();
+                }
+        
 
                 return "Cart was succesfully deleted";
             }
