@@ -70,7 +70,7 @@ namespace MedBay.Controllers
             var product = productRepository.GetProduct(id);
             var customer = customerRepository.GetUserInformation(currentUserId);
             var totalPrice = 1 * product.Price;
-            Cart cart = new Cart
+            Cart cartItem = new Cart
             {
                 ProductID = id,
                 CustomerID = customer.Id,
@@ -79,7 +79,20 @@ namespace MedBay.Controllers
                 TotalCartPrice = totalPrice
 
             };
-            cartRepository.InsertCart(cart);
+           
+            if (product.UnitsInStock > 0)
+            {
+                cartRepository.InsertCart(cartItem);
+                product.UnitsInStock--;
+                productRepository.UpdateProduct(product.ProductId, product);
+            }
+            else
+            {
+                //TODO: Informacja o braku produktów na stanie.
+            }
+        
+            
+           
             return RedirectToAction("Index");
         }
 
