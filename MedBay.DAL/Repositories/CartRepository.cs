@@ -86,7 +86,7 @@ namespace MedBay.DAL.Repositories
                 p.CustomerID = cart.CustomerID;
                 p.Quantity = cart.Quantity;
                 p.ProductID = cart.ProductID;
-                p.Product = cart.Product;
+                p.Product = cart.Product;         
                 db.SaveChanges();
                 return "Cart was succesfully updated";
 

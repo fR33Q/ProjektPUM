@@ -40,6 +40,7 @@ namespace MedBay.DAL.Repositories
                 oldProduct.Product_Description = product.Product_Description;
                 oldProduct.PictureFileName = product.PictureFileName;
                 oldProduct.CategoryID = product.CategoryID;
+                oldProduct.UnitsInStock = product.UnitsInStock;
 
 
                 context.SaveChanges();

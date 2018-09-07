@@ -5,11 +5,11 @@
 }
 
 @section scripts {
-    @*<script>
+    <script>
         function UpdateTotalPrice() {
             $.ajax({
                 type: 'GET',
-                url: "Checkout/UpdateTotal",
+                url: "Checkout/UpdateTotalPrice",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
                     if (msg.d == "$0.00") {
@@ -19,7 +19,7 @@
 
                     $('#totalPrice').text(msg.d);
                 }
-            })
+            });
         }
 
         function Change(el, type, pid) {
@@ -36,16 +36,16 @@
                     if (msg.d == 0) {
                         el.parentNode.parentNode.remove();
                     } else {
-                        $(el).siblings('span')[0].innerHTML = msg.d
+                        $(el).siblings('span')[0].innerHTML = msg.d;
                     }
-                    UpdateTotalPrice()
+                    UpdateTotalPrice();
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     debugger;
                 }
             });
         }
-    </script>*@
+    </script>
 }
 
 <h2>Shopping Cart</h2>

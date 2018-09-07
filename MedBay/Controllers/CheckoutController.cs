@@ -47,5 +47,84 @@ namespace MedBay.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public JsonResult UpdateTotalPrice()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            var customer = customerRepository.GetUserInformation(currentUserId);
+            var cartItems = cartRepository.GetOrdersInCart(customer.Id); 
+            double total = 0.0;
+            try
+            {
+                // var item = cartItems.FirstOrDefault(p => p.ProductID == pId);
+                foreach (var item in cartItems)
+                {
+                    // total = context.ShoppingCartDatas.Select(p => p.UnitPrice * p.Quantity).Sum();
+                    total += item.Quantity * item.Cart_Price;
+                }
+                
+            }
+            catch (Exception) { total = 0; }
+
+             //TODO: Odświeżanie strony jeżeli total = 0.
+
+            return Json(new { d = String.Format("{0:c}", total) }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult QuanityChange(int type, int pId)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            var customer = customerRepository.GetUserInformation(currentUserId);
+            var cartItems = cartRepository.GetOrdersInCart(customer.Id);
+            var actualProduct = productRepository.GetProduct(pId);
+
+            if (cartItems == null)
+            {
+                return Json(new { d = "0" });
+            }
+
+            var item = cartItems.FirstOrDefault(p => p.ProductID == pId);
+
+                int quantity;
+                // if type 0, decrease quantity
+                // if type 1, increase quanity
+                switch (type)
+                {
+                    case 0:
+                        item.Quantity--;
+                        actualProduct.UnitsInStock++;
+                        break;
+                    case 1:
+                        item.Quantity++;
+                        actualProduct.UnitsInStock--;
+                        break;
+                    case -1:
+                        actualProduct.UnitsInStock += item.Quantity;
+                        item.Quantity = 0;
+                        break;
+                    default:
+                        return Json(new { d = "0" });
+                }
+            
+
+            if (item.Quantity == 0)
+            {
+                cartRepository.DeleteCartItem(item.Id);
+                quantity = 0;
+            }
+            else
+            {
+                quantity = item.Quantity;
+            }
+
+            productRepository.UpdateProduct(actualProduct.ProductId, actualProduct);
+            if (type != -1)
+            {
+                cartRepository.UpdateQuantity(item.Id, item.Quantity);
+            }
+            
+            return Json(new { d = quantity });
+        }
     }
 }
