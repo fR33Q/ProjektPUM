@@ -30,10 +30,12 @@ namespace MedBay.DAL.Repositories
             }
         }
 
-        public Order GetOrder(int OrderId)
+        public Order GetOrder(int clientId)
         {
             MedbayEntities db = new MedbayEntities();
-            Order orderItem = db.Order.Find(OrderId);
+            Order orderItem = (from x in db.Order
+                               where x.CustomerID == clientId
+                               select x).FirstOrDefault();
             return orderItem;
         }
 
