@@ -62,15 +62,15 @@
                     <a class="quantity" onclick="Change(this, 1, @item.ProductID)">+</a>
                     <span class="p-name">@item.Quantity</span>
                     <a class="quantity" onclick="Change(this, 0,  @item.ProductID)">-</a>
-                    <a class="remove" onclick="Change(this, -1,  @item.ProductID)">Remove</a>
+                    <a class="remove" onclick="Change(this, -1,  @item.ProductID)">Usuń</a>
                 </td>
             </tr>
         }
         <tr><td>Total: </td><td id="totalPrice" colspan="2">@String.Format("{0:c}", Model.TotalCartPrice)</td></tr>
     </table>
     <div class="button">
-        @Html.ActionLink("Clear Cart", "ClearCart", "Checkout", null, new { @class = "btn btn-default" })
-        @Html.ActionLink("Countinue", "Index", "Order", null, new { @class = "btn btn-info" })
+        @Html.ActionLink("Wyczyść koszyk", "ClearCart", "Checkout", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Dalej", "Index", "Order", null, new { @class = "btn btn-info" })
     </div>
 
 

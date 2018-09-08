@@ -5,18 +5,18 @@
 <h2>@ViewBag.Title.</h2>
 <p class="text-success"></p>
 <div style="margin-bottom:50px;">
-    <h4>Change your account settings</h4>
+    <h4>Zmień ustawienia swojego konta</h4>
     <hr />
 
     <table style="width:100%">
         <tr>
-            <th>First name</th>
-            <th>Last name</th>
+            <th>Imię</th>
+            <th>Naziwsko</th>
             <th>Email</th>
-            <th>Phone Number</th>
-            <th>Street</th>
-            <th>City</th>
-            <th>Postal Code</th>
+            <th>Numer telefonu</th>
+            <th>Ulica</th>
+            <th>Miasto</th>
+            <th>Kod pocztowy</th>
         </tr>
         <tr>
             <td>@Model.FirstName</td>
@@ -32,7 +32,7 @@
 
 <p>
     <a class="btn btn-primary" data-toggle="collapse" href="#addAdress" role="button" aria-expanded="false" aria-controls="addAdress">
-        Edit your address
+        Edytuj adres
     </a>
 
 </p>
@@ -40,7 +40,7 @@
     @using (Html.BeginForm("AddAddress", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4>Edit address.</h4>
+        <h4>Edycja adresu.</h4>
         <hr />
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="form-group">
@@ -78,7 +78,7 @@
 
 <p>
     <a class="btn btn-primary" data-toggle="collapse" href="#editCustome" role="button" aria-expanded="false" aria-controls="editCustomer">
-        Edit your account information
+        Edytuj dane konta
     </a>
 
 </p>
@@ -86,7 +86,7 @@
     @using (Html.BeginForm("EditCustomer", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4>Edit account information</h4>
+        <h4>Edycja danych</h4>
         <hr />
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="form-group">

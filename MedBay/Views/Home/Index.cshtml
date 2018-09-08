@@ -5,9 +5,9 @@
 @model MedBay.Models.HomePageViewModel
 @Html.Partial("_Basket",Model)
 
-<h2>Products</h2>
+<h2>Produkty</h2>
 <form action="/Home/Index" method="get" id="category" class="option">
-    <span>Category</span>
+    <span>Kategoria</span>
     <select id="catName" class="form-control" name="catName" onchange="$('#category').submit()">
         <option value="">--- Wybierz ---</option>
         <option value="">Wszystkie</option>
@@ -31,7 +31,7 @@
             @if (this.User.IsInRole("User"))
             {
         <div class="add-to-cart">
-            @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.ProductId }, null)
+            @Html.ActionLink("Dodaj do koszyka", "AddToCart", "Home", new { id = item.ProductId }, null)
             <span class="p-price">@String.Format("{0:c}", item.Price)</span>
         </div>
             }
@@ -39,11 +39,11 @@
         @item.UnitsInStock
         @if (item.UnitsInStock > 1)
         {
-            <text>units</text>
+            <text>sztuk</text>
         }
         else
         {
-            <text>unit</text>
+            <text>sztuka</text>
         }
     </span>
         </div>
@@ -55,7 +55,7 @@
 else
 {
     <div id="EmptyDataMsg" class="alert alert-info">
-        <strong>Welcome!</strong> Our shop is currently empty.
+        <strong>Welcome!</strong> Nasz sklep jest aktualnie pusty.
     </div>
 }
 

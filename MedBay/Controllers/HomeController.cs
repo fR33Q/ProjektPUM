@@ -79,21 +79,21 @@ namespace MedBay.Controllers
                 TotalCartPrice = product.Price // to do usuniecia w sumie
 
             };
-           
-            // To nie tutaj ale zostawiam do wykorzystania w summaryView
-            //if (product.UnitsInStock > 0)
-            //{
-            //    cartRepository.InsertCart(cartItem);
-            //    product.UnitsInStock--;
-            //    productRepository.UpdateProduct(product.ProductId, product);
-            //}
-            //else
-            //{
-            //    //TODO: Informacja o braku produktów na stanie.
-            //}
-        
-            
-           
+
+            // comment lines - nie tutaj ale zostawiam do wykorzystania w summaryView 
+            if (product.UnitsInStock > 0)
+            {
+                cartRepository.InsertCart(cartItem);
+               // product.UnitsInStock--;
+              //  productRepository.UpdateProduct(product.ProductId, product);
+            }
+            else
+            {
+                //TODO: Informacja o braku produktów na stanie.
+            }
+
+
+
             return RedirectToAction("Index");
         }
 

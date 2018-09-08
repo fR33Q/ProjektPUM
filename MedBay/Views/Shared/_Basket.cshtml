@@ -1,21 +1,21 @@
 ﻿@if (Model.Cart != null)
 {
     <a class="basket">
-        <span>Your Basket: </span> @Model.TotalCount
+        <span>Twój Koszyk: </span> @Model.TotalCount
         <table>
             @foreach (var c in Model.Cart)
             {
                 <tr><td>@c.Quantity x @String.Format("{0:c}", @c.Product.Price)</td><td>@c.Product.Product_Name</td>
             <td align='center'>
                 <form>
-                    <input type="button" value="Delete" onclick="location.href ='@Url.Action("DeleteCart", "Home")?id=@c.Id'">
+                    <input type="button" value="Usuń" onclick="location.href ='@Url.Action("DeleteCart", "Home")?id=@c.Id'">
                 </form>
                     </td>
             </tr>
             }
             <tr>
-                <td>Total: @String.Format("{0:c}", Model.TotalPrice)</td>
-                <td>@Html.ActionLink("Check Out", "Index", "Checkout")</td>
+                <td>Razem: @String.Format("{0:c}", Model.TotalPrice)</td>
+                <td>@Html.ActionLink("Koszyk", "Index", "Checkout")</td>
             </tr>
         </table>
     </a>

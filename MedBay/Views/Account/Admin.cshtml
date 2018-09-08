@@ -8,31 +8,31 @@
 
 <p>
     <a class="btn btn-primary" data-toggle="collapse" href="#editCustomers" role="button" aria-expanded="false" aria-controls="editCustomers">
-        Edit customers
+        Zarządzaj użytkownikami
     </a>
 
 </p>
 <div class="collapse" id="editCustomers">
     <div>
-        <h4>Edit customers</h4>
+        <h4>Edycja użytkowników</h4>
         <hr />
 
         <table style="width:100%">
             @foreach (var item in Model.CustomerList)
             {
                 <tr>
-                    <th>First name</th>
-                    <th>Last name</th>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
                     <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Is Admin?</th>
+                    <th>Numer telefonu</th>
+                    <th>Jest administatorem?</th>
                     @if (item.isAdmin != true)
                     {
-                        <th>Change Roles</th>
+                        <th>Zmiana roli</th>
                     }
                     else
                     {
-                        <th>Change Status</th>
+                        <th>Zmiana uprawnień</th>
                     }
                 </tr>
                 <tr value="@item.Id">
@@ -42,11 +42,11 @@
                     <td>@item.PhoneNumber</td>
                     @if (item.isAdmin == true)
                     {
-                        <td style="color:green;">YES</td>
+                        <td style="color:green;">TAK</td>
                     }
                     else
                     {
-                        <td style="color:red;">NO</td>
+                        <td style="color:red;">NIE</td>
                     }
                     @if (item.isAdmin != true)
                     {
@@ -73,25 +73,25 @@
 
 <p>
     <a class="btn btn-primary" data-toggle="collapse" href="#editProducts" role="button" aria-expanded="false" aria-controls="editProducts">
-        Edit products
+        Edytuj produkty
     </a>
 
 </p>
 <div class="collapse" id="editProducts">
     <div>
-        <h4>Add Product</h4>
+        <h4>Dodaj produkt</h4>
         <hr />
 
         <table style="width:100%">
             @foreach (var item in Model.ProductList)
             {
                 <tr>
-                    <th>Product name</th>
-                    <th>Product Description</th>
-                    <th>Image Name</th>
-                    <th>CategoryID</th>
-                    <th>Price </th>
-                    <th>Units In Stock</th>
+                    <th>Nazwa produktu</th>
+                    <th>Opis</th>
+                    <th>Nazwa obrazu</th>
+                    <th>Kategoria</th>
+                    <th>Cena </th>
+                    <th>Ilość w magazynie</th>
 
                 </tr>
                 <tr value="@item.ProductId">
