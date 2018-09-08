@@ -69,27 +69,28 @@ namespace MedBay.Controllers
             string currentUserId = User.Identity.GetUserId();
             var product = productRepository.GetProduct(id);
             var customer = customerRepository.GetUserInformation(currentUserId);
-            var totalPrice = 1 * product.Price;
+           // var totalPrice = 1 * product.Price;
             Cart cartItem = new Cart
             {
                 ProductID = id,
                 CustomerID = customer.Id,
                 Quantity = 1,
                 Cart_Price = product.Price,
-                TotalCartPrice = totalPrice
+                TotalCartPrice = product.Price // to do usuniecia w sumie
 
             };
            
-            if (product.UnitsInStock > 0)
-            {
-                cartRepository.InsertCart(cartItem);
-                product.UnitsInStock--;
-                productRepository.UpdateProduct(product.ProductId, product);
-            }
-            else
-            {
-                //TODO: Informacja o braku produktów na stanie.
-            }
+            // To nie tutaj ale zostawiam do wykorzystania w summaryView
+            //if (product.UnitsInStock > 0)
+            //{
+            //    cartRepository.InsertCart(cartItem);
+            //    product.UnitsInStock--;
+            //    productRepository.UpdateProduct(product.ProductId, product);
+            //}
+            //else
+            //{
+            //    //TODO: Informacja o braku produktów na stanie.
+            //}
         
             
            
@@ -98,7 +99,13 @@ namespace MedBay.Controllers
 
         public ActionResult DeleteCart(int id)
         {
-            cartRepository.DeleteCartItem(id);
+            Cart cartItem = new Cart();
+            cartItem = cartRepository.GetCartItem(id);       
+            cartRepository.DeleteCartItem(cartItem.Id);
+            //do summaryView
+            //var product = productRepository.GetProduct(cartItem.ProductID);
+            //product.UnitsInStock++;
+            //productRepository.UpdateProduct(cartItem.ProductID, product);
             return RedirectToAction("Index");
         }
 

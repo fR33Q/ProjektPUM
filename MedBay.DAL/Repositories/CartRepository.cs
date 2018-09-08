@@ -114,5 +114,12 @@ namespace MedBay.DAL.Repositories
                                  select x).ToList();
             return orders;
         }
+
+        public Cart GetCartItem(int cartItemId)
+        {
+            MedbayEntities db = new MedbayEntities();
+            Cart cartItem = db.Cart.Find(cartItemId);
+            return cartItem;
+        }
     }
 }

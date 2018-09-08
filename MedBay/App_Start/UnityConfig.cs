@@ -53,6 +53,7 @@ namespace MedBay
             container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<ICustomerRepository, CustomerRepository>();
             container.RegisterType<ICartRepository, CartRepository>();
+            container.RegisterType<IOrderRepository, OrderRepository>();
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
             container.RegisterType<UserManager<ApplicationUser>>();
             container.RegisterType<DbContext, ApplicationDbContext>();
