@@ -1,0 +1,80 @@
+﻿@model MedBay.Models.OrderViewModel
+@{
+    ViewBag.Title = "Szczegóły zamówienia";
+}
+
+<h2>@ViewBag.Title</h2>
+<div style="margin-bottom:50px;">
+    <h4>Jeżeli dane dostawy są inne niż Twoje możesz dokonać edycji poniżej. Wszystkie pola muszą być wypełnione!</h4>
+    <hr />
+
+</div>
+<div id="addOrderInfo">
+@using (Html.BeginForm("EditOrderInfoAndGoToSummary", "Order", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new {@class = "text-danger"})
+    <div class="form-group">
+        <div class="col-md-2 control-label"> Imię </div>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.OrderItem.FirstName, new {@class = "form-control", required = "required"})
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label"> Nazwisko </div>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.OrderItem.LastName, new {@class = "form-control", required = "required"})
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label"> Numer telefonu </div>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.OrderItem.PhontNumber, new {@class = "form-control", required = "required"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-2 control-label"> Ulica </div>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.OrderItem.ShipStreet, new {@class = "form-control", required = "required"})
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label"> Numer domu/mieszkania </div>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.OrderItem.ShipNumber, new {@class = "form-control", required = "required"})
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label"> Miasto </div>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.OrderItem.ShipCity, new {@class = "form-control", required = "required"})
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label"> Kod pocztowy </div>
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.OrderItem.ShipPostalCode, new {@class = "form-control", required = "required"})
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label"> Metoda dostawy </div>
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.TransportListItem, new SelectList(Model.TransportList.Select(x=>x.Name)), "Wybierz metode transportu",  new {@class = "form-control", required = "required"})
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 control-label"> Metoda płatności </div>
+        <div class="col-md-10">
+            @Html.DropDownListFor(m=> m.PaymentListItem,new SelectList(Model.PaymentList.Select(x=>x.Name)), "Wybierz metode płatności", new {@class = "form-control", required = "required"})
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Cofnij", "AbadonChanges", "Order", Model.OrderItem, new { @class = "btn btn-default" })
+            <input type="submit" class="btn btn-primary" value="Przejdź do podsumowania" />
+        </div>
+    </div>
+
+}
+</div>

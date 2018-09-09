@@ -1,6 +1,6 @@
 ﻿@model MedBay.Models.ManageViewModel
 @{
-    ViewBag.Title = "Manage Account";
+    ViewBag.Title = "Zarządzanie kontem";
 }
 <h2>@ViewBag.Title.</h2>
 <p class="text-success"></p>
@@ -44,25 +44,25 @@
         <hr />
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(m => m.Address.Street, new { @class = "col-md-2 control-label" })
+            <div class="col-md-2 control-label"> Ulica </div>
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Address.Street, new { @class = "form-control", required = "required" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Address.City, new { @class = "col-md-2 control-label" })
+            <div class="col-md-2 control-label"> Miasto </div>
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Address.City, new { @class = "form-control", required = "required" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Address.Number, new { @class = "col-md-2 control-label" })
+            <div class="col-md-2 control-label"> Numer domu </div>
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Address.Number, new { @class = "form-control", required = "required" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Address.PostalCode, new { @class = "col-md-2 control-label" })
+            <div class="col-md-2 control-label"> Kod pocztowy </div>
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Address.PostalCode, new { @class = "form-control", required = "required" })
             </div>
@@ -70,7 +70,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="Add Address" />
+                <input type="submit" class="btn btn-default" value="Dodaj adres" />
             </div>
         </div>
     }
@@ -90,33 +90,33 @@
         <hr />
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(m => m.Customer.FirstName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-2 control-label"> Imię </div>
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Customer.FirstName, new { @class = "form-control", required = "required" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Customer.LastName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-2 control-label"> Nazwisko </div>
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Customer.LastName, new { @class = "form-control", required = "required" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Customer.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-2 control-label"> Email </div>
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.Customer.Email, new { @class = "form-control", required = "required" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Customer.PhoneNumber, new { @class = "col-md-2 control-label" })
+            <div class="col-md-2 control-label"> Numer telefonu </div>
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Customer.PhoneNumber, new { @class = "form-control", required = "required" })
+                @Html.TextBoxFor(m => m.Customer.PhoneNumber, new {@class = "form-control", required = "required"})
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="Edit" />
+                <input type="submit" class="btn btn-default" value="Edytuj" />
             </div>
         </div>
     }
