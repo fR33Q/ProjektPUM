@@ -12,14 +12,12 @@ namespace MedBay.Controllers
 {
     public class OrderController : Controller
     {
-        private IProductRepository productRepository;
         private ICustomerRepository customerRepository;
         private ICartRepository cartRepository;
         private IOrderRepository orderRepository;
 
-        public OrderController(IProductRepository productRepository, ICustomerRepository customerRepository, ICartRepository cartRepository, IOrderRepository orderRepository)
+        public OrderController(ICustomerRepository customerRepository, ICartRepository cartRepository, IOrderRepository orderRepository)
         {
-            this.productRepository = productRepository;
             this.customerRepository = customerRepository;
             this.cartRepository = cartRepository;
             this.orderRepository = orderRepository;
@@ -82,7 +80,7 @@ namespace MedBay.Controllers
             var customer = customerRepository.GetUserInformation(currentUserId);
             var transport = orderRepository.GetTransportMethod(model.TransportListItem);
             var cartItems = cartRepository.GetOrdersInCart(customer.Id);
-            var cartTotalPrice = cartItems.Select(x => x.Cart_Price).Sum();
+            var cartTotalPrice = cartItems.Select(x => x.TotalCartPrice).Sum();
             var paymentId = orderRepository.GetPaymentMethodId(model.PaymentListItem);
             var totalPrice = cartTotalPrice + transport.Price;
 

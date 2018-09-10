@@ -12,10 +12,8 @@ namespace MedBay.Models
         public Order OrderItem { get; set; }
         public List<TransportMethod> TransportList { get; set; }
         public List<PaymentMethod> PaymentList { get; set; }
-        public SelectList selekcja { get; set; }
         public string TransportListItem { get; set; }
         public string PaymentListItem { get; set; }
-
         public int TotalPrice { get; set; }
     }
 }

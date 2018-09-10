@@ -122,6 +122,7 @@ namespace MedBay.Controllers
             if (type != -1)
             {
                 cartRepository.UpdateQuantity(item.Id, item.Quantity);
+                cartRepository.UpdateTotalCartPrice(item.Id);
             }
             
             return Json(new { d = quantity });

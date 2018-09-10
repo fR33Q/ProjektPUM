@@ -1,0 +1,90 @@
+﻿@model MedBay.Models.SummaryViewModel
+
+
+<h2>Podsumowanie</h2>
+<hr />
+<h4>Dane osobowe</h4>
+<hr />
+<table class="cart-page">
+
+    <tr>
+        <td><span class="p-name">Imię</span> </td>
+        <td><span class="p-name">@Model.OrderItem.FirstName</span> </td>
+    </tr>
+    <tr>
+        <td><span class="p-name">Nazwisko</span> </td>
+        <td><span class="p-name">@Model.OrderItem.LastName</span> </td>
+    </tr>
+    <tr>
+        <td><span class="p-name">Numer telefonu</span> </td>
+        <td><span class="p-name">@Model.OrderItem.PhontNumber</span> </td>
+    </tr>
+    <tr>
+        <td><span class="p-name">Ulica</span> </td>
+        <td><span class="p-name">@Model.OrderItem.ShipStreet</span> </td>
+
+    </tr>
+    <tr>
+        <td><span class="p-name">Numer mieszkania/domu</span> </td>
+        <td><span class="p-name">@Model.OrderItem.ShipNumber</span> </td>
+    </tr>
+    <tr>
+        <td><span class="p-name">Miasto</span></td>
+        <td><span class="p-name">@Model.OrderItem.ShipCity</span> </td>
+    </tr>
+    <tr>
+        <td><span class="p-name">Kod pocztowy</span> </td>
+        <td><span class="p-name">@Model.OrderItem.ShipPostalCode</span> </td>
+    </tr>
+</table>
+<h4>Zamówienie</h4>
+<hr />
+
+<table class="cart-page">
+    <tr>
+        <th>Produkt</th>
+        <th>Ilość</th>
+        <th>Cena</th>
+    </tr>
+
+    @foreach (var item in Model.CartItems)
+    {
+        <tr>
+            <td><span class="p-name">@item.Product.Product_Name</span> </td>
+            <td><span class="p-name">@item.Quantity</span> </td>
+            <td><span class="p-name">@String.Format("{0:c}", item.TotalCartPrice)</span> </td>
+
+        </tr>
+    }
+    
+</table>
+<hr />
+<h4>Sposób płatności oraz transportu</h4>
+<hr />
+<table class="cart-page">
+    <tr>
+        <th>Sposób płatności</th>
+        <th>Sposób dostarczenia</th>
+    </tr>
+
+        <tr>
+            <td><span class="p-name">@Model.OrderItem.PaymentMethod.Name</span> </td>
+
+            <td><span class="p-name">@Model.OrderItem.TransportMethod.Name - @Model.OrderItem.TransportMethod.Price zł</span> </td>
+            
+
+        </tr>
+
+</table>
+<hr />
+<h4>Razem do zapłaty</h4>
+<hr />
+
+<table class="cart-page">
+    <tr><td>Razem do zapłaty: </td><td id="totalPrice" colspan="2">@String.Format("{0:c}", Model.OrderItem.Order_Price)</td></tr>
+</table>
+<hr />
+<div class="button">
+    @Html.ActionLink("Cofnij", "Index", "Order", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Zakończ zakupy", "EndOfShop", "Summary", Model.OrderItem, new { @class = "btn btn-primary" })
+</div>

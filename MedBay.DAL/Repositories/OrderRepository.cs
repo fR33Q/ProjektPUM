@@ -47,6 +47,7 @@ namespace MedBay.DAL.Repositories
                 o.PaymentMethodID = order.PaymentMethodID;
                 o.PhontNumber = order.PhontNumber;
                 o.ShipCity = order.ShipCity;
+                o.TransportMethodID = order.TransportMethodID;
                 o.ShipNumber = order.ShipNumber;
                 o.ShipPostalCode = order.ShipNumber;
                 o.ShipStreet = order.ShipStreet;

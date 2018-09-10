@@ -121,5 +121,13 @@ namespace MedBay.DAL.Repositories
             Cart cartItem = db.Cart.Find(cartItemId);
             return cartItem;
         }
+
+        public void UpdateTotalCartPrice(int id)
+        {
+            MedbayEntities db = new MedbayEntities();
+            Cart cartItem = db.Cart.Find(id);
+            cartItem.TotalCartPrice = cartItem.Quantity * cartItem.Cart_Price;
+            db.SaveChanges();
+        }
     }
 }
