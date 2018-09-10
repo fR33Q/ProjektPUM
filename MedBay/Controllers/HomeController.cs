@@ -69,27 +69,35 @@ namespace MedBay.Controllers
             string currentUserId = User.Identity.GetUserId();
             var product = productRepository.GetProduct(id);
             var customer = customerRepository.GetUserInformation(currentUserId);
+        
 
-            Cart cartItem = new Cart
+            if (!cartRepository.IsInCart(product.ProductId))
             {
-                ProductID = id,
-                CustomerID = customer.Id,
-                Quantity = 1,
-                Cart_Price = product.Price,
-                TotalCartPrice = product.Price 
+                Cart cartItem = new Cart
+                {
+                    ProductID = id,
+                    CustomerID = customer.Id,
+                    Quantity = 1,
+                    Cart_Price = product.Price,
+                    TotalCartPrice = product.Price
 
-            };
+                };
+
+                if (product.UnitsInStock > 0)
+                {
+                    cartRepository.InsertCart(cartItem);
+
+                }
+                else
+                {
+                    //TODO: Informacja o braku produktów na stanie.
+                }
+             
+            }
+ 
 
    
-            if (product.UnitsInStock > 0)
-            {
-                cartRepository.InsertCart(cartItem);
   
-            }
-            else
-            {
-                //TODO: Informacja o braku produktów na stanie.
-            }
 
             return RedirectToAction("Index");
         }

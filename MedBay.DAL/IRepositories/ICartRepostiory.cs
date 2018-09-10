@@ -17,6 +17,7 @@ namespace MedBay.DAL.IRepositories
         List<Cart> GetOrdersInCart(int clientId);
         Cart GetCartItem(int cartItemId);
         void UpdateTotalCartPrice(int id);
+        bool IsInCart(int productId);
 
     }
 }

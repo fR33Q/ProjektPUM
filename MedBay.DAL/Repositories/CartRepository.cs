@@ -115,6 +115,23 @@ namespace MedBay.DAL.Repositories
             return orders;
         }
 
+        public bool IsInCart(int productId)
+        {
+           
+            MedbayEntities db = new MedbayEntities();
+            Cart cartItem = (from x in db.Cart
+                where x.ProductID == productId
+                select x).FirstOrDefault();
+            if (cartItem != null)
+            {
+              
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public Cart GetCartItem(int cartItemId)
         {
             MedbayEntities db = new MedbayEntities();
