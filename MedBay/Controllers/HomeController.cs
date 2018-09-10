@@ -129,7 +129,17 @@ namespace MedBay.Controllers
             return productList;
 
         }
-        
+
+        public ActionResult About()
+        {
+            return View("About");
+        }
+
+        public ActionResult Contact()
+        {
+            return View("Contact");
+        }
+
 
     }
 }

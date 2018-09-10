@@ -57,17 +57,15 @@ namespace MedBay.Controllers
             double total = 0.0;
             try
             {
-                // var item = cartItems.FirstOrDefault(p => p.ProductID == pId);
+
                 foreach (var item in cartItems)
                 {
-                    // total = context.ShoppingCartDatas.Select(p => p.UnitPrice * p.Quantity).Sum();
-                    total += item.Quantity * item.Cart_Price;
+                      total += item.Quantity * item.Cart_Price;
                 }
                 
             }
             catch (Exception) { total = 0; }
 
-             //TODO: Odświeżanie strony jeżeli total = 0.
 
             return Json(new { d = String.Format("{0:c}", total) }, JsonRequestBehavior.AllowGet);
         }
@@ -87,8 +85,7 @@ namespace MedBay.Controllers
             var item = cartItems.FirstOrDefault(p => p.ProductID == pId);
 
                 int quantity;
-                // if type 0, decrease quantity
-                // if type 1, increase quanity
+      
                 switch (type)
                 {
                     case 0:

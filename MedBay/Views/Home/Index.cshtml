@@ -23,11 +23,10 @@
         @foreach (var item in Model.Products)
         {
         <div class="list-item">
-            @*<span class="p-cart">@item.Category.Name</span>*@
             <span class="p-brand">@item.Price PLN</span>
             <span class="p-name">@item.Product_Name</span>
             <span class="p-description">@item.Product_Description</span>
-            <span> <img src="~/Images/Products/@item.PictureFileName" style="width: 200px;" /></span>
+            <span> <img src="~/Images/Products/@item.PictureFileName" style="width: 250px; height: 200px;" /></span>
             @if (this.User.IsInRole("User"))
             {
         <div class="add-to-cart">
@@ -59,13 +58,3 @@ else
     </div>
 }
 
-@*<tr>
-        <td>@item.pname</td>
-        <td>@string.format("{0:c}", item.unitprice)</td>
-        <td>
-            <a class="quantity" onclick="change(this, 1, @item.pid)">+</a>
-            <span>@item.quantity</span>
-            <a class="quantity" onclick="change(this, 0, @item.pid)">-</a>
-            <a class="remove" onclick="change(this, -1, @item.pid)">remove</a>
-        </td>
-    </tr>*@
