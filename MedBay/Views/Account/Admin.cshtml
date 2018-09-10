@@ -52,7 +52,7 @@
                     {
                         <td>
                             <form>
-                                <input type="button" class="btn btn-primary" value="Add Admin Permission" onclick="location.href ='@Url.Action("AddAdmin", "Account")?UserId=@item.UserID'">
+                                <input type="button" class="btn btn-primary" value="Dodaj Admina" onclick="location.href ='@Url.Action("AddAdmin", "Account")?UserId=@item.UserID'">
                             </form>
                         </td>
                     }
@@ -60,7 +60,7 @@
                     {
                         <td>
                             <form>
-                                <input type="button" class="btn btn-primary" value="Delete Admin Permission" onclick="location.href ='@Url.Action("DeleteAdmin", "Account")?UserId=@item.UserID'">
+                                <input type="button" class="btn btn-primary" value="Usuń Admina" onclick="location.href ='@Url.Action("DeleteAdmin", "Account")?UserId=@item.UserID'">
                             </form>
                         </td>
                     }
@@ -73,13 +73,13 @@
 
 <p>
     <a class="btn btn-primary" data-toggle="collapse" href="#editProducts" role="button" aria-expanded="false" aria-controls="editProducts">
-        Edytuj produkty
+        Produkty
     </a>
 
 </p>
 <div class="collapse" id="editProducts">
     <div>
-        <h4>Dodaj produkt</h4>
+        <h4>Podgląd produktów</h4>
         <hr />
 
         <table style="width:100%">
@@ -110,7 +110,7 @@
 
 <p>
     <a class="btn btn-primary" data-toggle="collapse" href="#addProduct" role="button" aria-expanded="false" aria-controls="addProduct">
-       Add products
+       Dodaj produkt
     </a>
 
 </p>
@@ -118,7 +118,7 @@
     @using (Html.BeginForm("AddProduct", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4>Add product</h4>
+    <h4> Dodaj produkt</h4>
         <hr />
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="form-group">
@@ -160,7 +160,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="Add Product" />
+                <input type="submit" class="btn btn-default" value="Dodaj produkt" />
             </div>
         </div>
     }
